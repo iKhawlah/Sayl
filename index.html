@@ -65,10 +65,10 @@ input[type=range]::-moz-range-thumb{width:18px; height:18px; border:none; border
 .photo-strip .photo{display:none; width:100%; aspect-ratio:800/320; object-fit:cover; border-radius:4px; border:1px solid var(--line); background:var(--surface-2);}
 .photo-strip .photo.active{display:block;}
 
-/* SECTION B: predictor */
-.radar{background:var(--bg);}
-.sim-panel{display:grid; grid-template-columns:1fr 260px; gap:36px; margin-top:15px; align-items:center;}
-.controls{background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:28px;}
+/* SECTION B: predictor (رادار التنبؤ) */
+.radar{background:var(--bg); position: relative; overflow: hidden; z-index: 1;}
+.sim-panel{display:grid; grid-template-columns:1fr 260px; gap:36px; margin-top:15px; align-items:center; position: relative; z-index: 2;}
+.controls{background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:28px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
 .control{margin-bottom:24px;}
 .control:last-child{margin-bottom:0;}
 .control-top{display:flex; justify-content:space-between; font-size:14.5px; margin-bottom:10px;}
@@ -81,6 +81,11 @@ select{width:100%; background:var(--surface-2); color:var(--text); border:1px so
 .gauge-msg{text-align:center; font-size:14.5px; color:var(--text-dim); max-width:230px; transition: color 0.3s;}
 .gauge-msg b{color:var(--text);}
 @media (max-width:760px){.sim-panel{grid-template-columns:1fr;}}
+
+/* NEW: Rain Animation Background */
+#rainContainer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.3; }
+.drop { position: absolute; top: -50px; width: 2px; height: 35px; background: linear-gradient(transparent, var(--water)); animation: fall linear infinite; }
+@keyframes fall { 0% { transform: translateY(-50px); } 100% { transform: translateY(800px); opacity: 0; } }
 
 /* AI Modal Styles */
 .btn-outline { background: transparent; color: var(--water); border: 1px solid var(--water); padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-family: inherit; transition: 0.3s; margin-bottom: 10px;}
@@ -101,7 +106,7 @@ select{width:100%; background:var(--surface-2); color:var(--text); border:1px so
   100% { box-shadow: 0 0 0 0 rgba(226, 70, 90, 0); } 
 }
 
-footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5px; border-top:1px solid var(--line);}
+footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5px; border-top:1px solid var(--line); position: relative; z-index: 2;}
 </style>
 </head>
 <body>
@@ -140,8 +145,11 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
 </section>
 
 <section class="radar" id="radar">
+  <!-- تأثير المطر الديناميكي في الخلفية -->
+  <div id="rainContainer"></div>
+
   <div class="wrap">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2;">
       <div class="eyebrow">رادار التنبؤ المعزز بالذكاء الاصطناعي</div>
       <button class="btn-outline" onclick="document.getElementById('modelModal').style.display='flex'">تفاصيل الذكاء الاصطناعي 🧠</button>
     </div>
@@ -149,7 +157,7 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
     <div class="sim-panel">
       <div class="controls">
         <div class="control">
-          <div class="control-top"><b>الوادي المستهدف</b></div>
+          <div class="control-top"><b>📍 الوادي المستهدف</b></div>
           <select id="valleySelect">
             <option>شعيب الأديرع</option>
             <option>وادي عقدة</option>
@@ -157,15 +165,15 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
           </select>
         </div>
         <div class="control">
-          <div class="control-top"><b>كمية الهطول المتوقعة</b><span id="rainVal">40 مم</span></div>
+          <div class="control-top"><b>🌧️ كمية الهطول المتوقعة</b><span id="rainVal">40 مم</span></div>
           <input type="range" id="rain" min="0" max="100" value="40">
         </div>
         <div class="control">
-          <div class="control-top"><b>تشبع التربة بالرطوبة</b><span id="soilVal">30%</span></div>
+          <div class="control-top"><b>🌱 تشبع التربة بالرطوبة</b><span id="soilVal">30%</span></div>
           <input type="range" id="soil" min="0" max="100" value="30">
         </div>
         <div class="control">
-          <div class="control-top"><b>التغطية السحابية (السحب الركامية)</b><span id="cloudVal">50%</span></div>
+          <div class="control-top"><b>☁️ التغطية السحابية</b><span id="cloudVal">50%</span></div>
           <input type="range" id="cloud" min="0" max="100" value="50">
         </div>
       </div>
@@ -226,6 +234,23 @@ function renderTime(v){
 timeSlider.addEventListener('input', e=> renderTime(+e.target.value));
 renderTime(0);
 
+// قسم المطر الديناميكي
+const rainContainer = document.getElementById('rainContainer');
+function updateRain() {
+  const rainAmount = +document.getElementById('rain').value;
+  rainContainer.innerHTML = ''; 
+  // زيادة عدد القطرات كلما زاد مؤشر المطر (بحد أقصى 100 قطرة)
+  let dropCount = Math.floor(rainAmount); 
+  for(let i = 0; i < dropCount; i++) {
+    let drop = document.createElement('div');
+    drop.className = 'drop';
+    drop.style.left = (Math.random() * 100) + '%';
+    drop.style.animationDuration = (Math.random() * 0.5 + 0.4) + 's';
+    drop.style.animationDelay = (Math.random() * 2) + 's';
+    rainContainer.appendChild(drop);
+  }
+}
+
 // قسم التنبؤ مع تأثير المحاكاة وزر الطوارئ
 const rain = document.getElementById('rain'), soil = document.getElementById('soil'), cloud = document.getElementById('cloud');
 const rainVal = document.getElementById('rainVal'), soilVal = document.getElementById('soilVal'), cloudVal = document.getElementById('cloudVal');
@@ -240,6 +265,8 @@ function triggerSimulation(){
   rainVal.textContent = r + ' مم';
   soilVal.textContent = s + '%';
   cloudVal.textContent = c + '%';
+  
+  updateRain(); // تحديث كثافة المطر في الخلفية
   
   // تأثير التحميل
   gaugeText.textContent = "...";
