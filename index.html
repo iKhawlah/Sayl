@@ -6,7 +6,7 @@
 <title>سَيْل — الإنذار المبكر للسيول</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0A0E17; --bg-alt:#0D1420; --surface:#131C2E; --surface-2:#182238;
@@ -28,7 +28,7 @@
 html{scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth;}
 body{
   background:var(--bg); color:var(--text);
-  font-family:'IBM Plex Sans Arabic', sans-serif;
+  font-family:'Cairo', sans-serif;
   line-height:1.75; overflow-x:hidden;
 }
 .wrap{max-width:960px; margin:0 auto; padding:0 24px;}
@@ -47,48 +47,25 @@ p{color:var(--text-dim); font-size:17px; max-width:640px;}
   border-bottom:1px solid var(--line);
   overflow:hidden;
 }
-.hero .wrap{position:relative; z-index:2;}
-.hero-title{font-size:clamp(48px,9vw,88px); letter-spacing:.5px;}
+.hero .wrap{position:relative; z-index:2; text-align:right;}
+.hero-title{font-family:'Aref Ruqaa', serif; font-size:clamp(90px,22vw,220px); letter-spacing:2px; font-weight:700;}
 .hero-title span{color:var(--water);}
-.hero-slogan{font-size:clamp(18px,2.4vw,23px); color:var(--text); font-weight:400; margin-top:18px; max-width:520px;}
-.hero-track{color:var(--text-dim); font-size:14px; margin-top:22px;}
-.hero-svg{position:absolute; inset:0; width:100%; height:100%; opacity:.9;}
-.flow-path{fill:none; stroke:var(--water); stroke-width:3; stroke-linecap:round; filter:drop-shadow(0 0 6px rgba(53,190,238,.7));
-  stroke-dasharray:1400; stroke-dashoffset:1400; animation:flow 3.2s ease-out forwards .4s;}
-@keyframes flow{to{stroke-dashoffset:0;}}
-@media (prefers-reduced-motion: reduce){.flow-path{animation:none; stroke-dashoffset:0;}}
-
-/* PROBLEM */
-.problem{background:var(--bg);}
-.problem-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:start;}
-.stat-card{background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:22px 24px;}
-.stat-card + .stat-card{margin-top:14px;}
-.stat-num{font-size:30px; font-weight:700; color:var(--danger);}
-.stat-label{color:var(--text-dim); font-size:14px; margin-top:4px;}
-@media (max-width:760px){.problem-grid{grid-template-columns:1fr;}}
-
-/* SOLUTION INTRO */
-.solution-split{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); margin-top:40px;}
-.solution-half{background:var(--surface); padding:34px 30px;}
-.solution-half h3{font-size:20px; color:var(--water); margin-bottom:10px;}
-.solution-half p{max-width:none; font-size:15.5px;}
-@media (max-width:760px){.solution-split{grid-template-columns:1fr;}}
+.hero-slogan{font-size:clamp(18px,2.4vw,23px); color:var(--text); font-weight:400; margin-top:18px; max-width:560px;}
 
 /* SECTION A: memory / slider */
 .memory{background:var(--bg-alt); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
 .valley-panel{background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:28px; margin-top:34px;}
-.valley-svg{width:100%; height:auto; display:block; border-radius:2px; overflow:hidden; background:#0B1017;}
+.valley-svg{width:100%; height:auto; display:none;} /* تم إخفاء الـ SVG للتركيز على صورك */
 .slider-row{display:flex; align-items:center; gap:16px; margin-top:22px;}
 input[type=range]{-webkit-appearance:none; width:100%; height:4px; border-radius:2px; background:var(--line); outline:none;}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--water); cursor:pointer; box-shadow:0 0 10px rgba(53,190,238,.6);}
 input[type=range]::-moz-range-thumb{width:18px; height:18px; border:none; border-radius:50%; background:var(--water); cursor:pointer;}
 .phase-labels{display:flex; justify-content:space-between; margin-top:10px; font-size:13px; color:var(--text-dim);}
 .phase-active{color:var(--water); font-weight:600;}
-.timestamp{font-size:14px; color:var(--water); margin-top:16px; min-height:20px;}
+.timestamp{font-size:14px; color:var(--water); margin-top:16px; min-height:20px; font-weight:bold;}
 .photo-strip{margin-top:22px;}
 .photo-strip .photo{display:none; width:100%; aspect-ratio:800/320; object-fit:cover; border-radius:4px; border:1px solid var(--line); background:var(--surface-2);}
 .photo-strip .photo.active{display:block;}
-.photo-hint{font-size:12.5px; color:var(--text-dim); margin-top:8px;}
 
 /* SECTION B: predictor */
 .radar{background:var(--bg);}
@@ -99,26 +76,13 @@ input[type=range]::-moz-range-thumb{width:18px; height:18px; border:none; border
 .control-top{display:flex; justify-content:space-between; font-size:14.5px; margin-bottom:10px;}
 .control-top b{color:var(--text); font-weight:600;}
 .control-top span{color:var(--water);}
-select{width:100%; background:var(--surface-2); color:var(--text); border:1px solid var(--line); border-radius:4px; padding:10px 12px; font-family:inherit; font-size:14.5px;}
+select{width:100%; background:var(--surface-2); color:var(--text); border:1px solid var(--line); border-radius:4px; padding:10px 12px; font-family:inherit; font-size:14.5px; outline:none;}
 .gauge-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
 .gauge{width:220px; height:220px;}
 .gauge-pct{font-size:38px; font-weight:700;}
-.gauge-msg{text-align:center; font-size:14.5px; color:var(--text-dim); max-width:230px;}
+.gauge-msg{text-align:center; font-size:14.5px; color:var(--text-dim); max-width:230px; transition: color 0.3s;}
 .gauge-msg b{color:var(--text);}
 @media (max-width:760px){.sim-panel{grid-template-columns:1fr;}}
-
-/* TECH GRID */
-.tech{background:var(--bg-alt); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-.tech-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); margin-top:34px;}
-.tech-card{background:var(--surface); padding:30px 28px;}
-.tech-card h3{font-size:18px; margin-bottom:10px; color:var(--text);}
-.tech-card p{font-size:15px; max-width:none;}
-@media (max-width:760px){.tech-grid{grid-template-columns:1fr;}}
-
-/* FUTURE */
-.future p{max-width:680px;}
-.future-tags{display:flex; flex-wrap:wrap; gap:10px; margin-top:22px;}
-.tag{border:1px solid var(--line); color:var(--sand); font-size:13.5px; padding:7px 14px; border-radius:20px;}
 
 footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5px; border-top:1px solid var(--line);}
 </style>
@@ -126,98 +90,50 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
 <body>
 
 <section class="hero">
-  <svg class="hero-svg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
-    <path class="flow-path" d="M -50 480 Q 150 420 260 460 T 480 380 Q 600 320 700 360 T 1050 250"/>
-  </svg>
   <div class="wrap">
     <h1 class="hero-title">سَيْ<span>ل</span></h1>
     <p class="hero-slogan">الإنذار المبكر للسيول.. من الفضاء إلى الأودية.</p>
-    <div class="hero-track">المسار: الذكاء الاصطناعي وعلوم البيانات الفضائية</div>
-  </div>
-</section>
-
-<section class="problem">
-  <div class="wrap problem-grid">
-    <div>
-      <div class="eyebrow">المشكلة</div>
-      <h2>لماذا نحتاج سَيْل؟</h2>
-      <p>تتميز منطقة حائل بتضاريس جبلية وأودية متشعبة، مثل وادي الأديرع. مع التغيرات المناخية، تتحول هذه الأودية فجأة إلى مسارات لسيول جارفة تدمر البنية التحتية وتهدد الأرواح والمزارع.</p>
-      <p style="margin-top:14px;">الأنظمة الحالية تعتمد على توقعات طقس عامة للرقعة الجغرافية كاملة، وتعجز عن تحديد أي وادٍ بعينه سيفيض، ومتى بالضبط.</p>
-    </div>
-    <div>
-      <div class="stat-card"><div class="stat-num">عام</div><div class="stat-label">نطاق التنبؤ في الأنظمة الحالية — بلا تحديد للوادي</div></div>
-      <div class="stat-card"><div class="stat-num">دقيق</div><div class="stat-label">نطاق التنبؤ في سَيْل — احتمالية لكل وادٍ على حدة</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="problem" style="padding-top:0;">
-  <div class="wrap">
-    <div class="eyebrow">الحل</div>
-    <h2>الأرض تمتلك ذاكرة، والسيول تعيد رسم مساراتها القديمة</h2>
-    <p>سَيْل منصة ذكية تدمج بيانات الأقمار الصناعية التاريخية مع الذكاء الاصطناعي لفهم سلوك الأرض والتنبؤ بالكارثة قبل وقوعها.</p>
-    <div class="solution-split">
-      <div class="solution-half">
-        <h3>القسم الأول — ذاكرة الأودية</h3>
-        <p>توثيق بصري لمسارات السيول السابقة عبر صور الأقمار الصناعية.</p>
-      </div>
-      <div class="solution-half">
-        <h3>القسم الثاني — رادار التنبؤ</h3>
-        <p>نظام إنذار مبكر يعمل في الوقت الفعلي بالذكاء الاصطناعي.</p>
-      </div>
-    </div>
   </div>
 </section>
 
 <section class="memory" id="memory">
   <div class="wrap">
-    <div class="eyebrow">القسم الأول</div>
-    <h2>ذاكرة الأودية</h2>
-    <p>صور من القمر الصناعي Sentinel-2 لأودية حائل، بعد تطبيق مؤشر المياه NDWI الذي يعزل الماء ويجعله يضيء بالأزرق وسط الأرض الجافة. حرّك الشريط لترى الوادي قبل السيل وأثناءه وبعده.</p>
-
+    <div class="eyebrow">ذاكرة الأودية</div>
     <div class="valley-panel">
-      <svg class="valley-svg" id="valleySvg" viewBox="0 0 800 320">
-        <rect width="800" height="320" fill="#0B1017"/>
-        <polygon points="0,320 0,190 130,120 260,200 400,90 560,190 680,130 800,210 800,320" fill="#2A2015"/>
-        <polygon points="0,320 0,190 130,120 260,200 400,90 560,190 680,130 800,210 800,320" fill="none" stroke="#3a2e1c" stroke-width="1"/>
-        <path id="waterPath" d="M 0 260 Q 200 250 260 265 T 560 250 Q 700 245 800 260 L 800 320 L 0 320 Z" fill="#1D6E8C" opacity="0.35"/>
-      </svg>
+      
+      <div class="photo-strip">
+        <!-- تم تعديل الصيغ إلى png والمسارات لتكون بجانب الملف مباشرة -->
+        <img class="photo active" data-phase="0" src="before.png" alt="غيوم فوق الوادي">
+        <img class="photo" data-phase="1" src="during.png" alt="جريان السيل">
+        <img class="photo" data-phase="2" src="after.png" alt="انحسار السيل">
+      </div>
+
       <div class="slider-row">
         <span style="color:var(--text-dim); font-size:13px;">قبل</span>
         <input type="range" id="timeSlider" min="0" max="100" value="0">
         <span style="color:var(--text-dim); font-size:13px;">بعد</span>
       </div>
       <div class="phase-labels">
-        <span id="lbl0">قبل السيل</span>
+        <span id="lbl0">قبل الحالة</span>
         <span id="lbl1">أثناء السيل</span>
-        <span id="lbl2">بعد السيل</span>
+        <span id="lbl2">بعد انحسار المياه</span>
       </div>
-      <div class="timestamp" id="timestamp">وادي الأديرع — التربة جافة، لا مسطحات مائية ظاهرة</div>
-
-      <div class="photo-strip">
-        <img class="photo active" data-phase="0" src="images/before.jpg" alt="الوادي قبل السيل" onerror="this.style.display='none'">
-        <img class="photo" data-phase="1" src="images/during.jpg" alt="الوادي أثناء السيل" onerror="this.style.display='none'">
-        <img class="photo" data-phase="2" src="images/after.jpg" alt="الوادي بعد السيل" onerror="this.style.display='none'">
-        <div class="photo-hint">ضع صورك الحقيقية داخل مجلد images بجانب الملف باسم before.jpg / during.jpg / after.jpg — الصورة تظهر تلقائيًا حسب موضع الشريط.</div>
-      </div>
+      <div class="timestamp" id="timestamp">تتجمع الغيوم الكثيفة فوق المنطقة، مؤشر قوي لبداية حالة مطرية.</div>
     </div>
   </div>
 </section>
 
 <section class="radar" id="radar">
   <div class="wrap">
-    <div class="eyebrow">القسم الثاني</div>
-    <h2>رادار التنبؤ المستقبلي</h2>
-    <p>نموذج انحدار لوجستي يُغذّى ببيانات الهطول، وتشبع التربة، والتغطية السحابية، ليحسب احتمالية جريان السيل لحظيًا. جرّب المحاكي:</p>
-
+    <div class="eyebrow">رادار التنبؤ المعزز بالذكاء الاصطناعي</div>
     <div class="sim-panel">
       <div class="controls">
         <div class="control">
-          <div class="control-top"><b>الوادي</b></div>
+          <div class="control-top"><b>الوادي المستهدف</b></div>
           <select id="valleySelect">
-            <option>وادي الأديرع</option>
-            <option>وادي حائل</option>
-            <option>وادي الشعبة</option>
+            <option>شعيب الأديرع</option>
+            <option>وادي عقدة</option>
+            <option>وادي مشار</option>
           </select>
         </div>
         <div class="control">
@@ -229,7 +145,7 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
           <input type="range" id="soil" min="0" max="100" value="30">
         </div>
         <div class="control">
-          <div class="control-top"><b>التغطية السحابية</b><span id="cloudVal">50%</span></div>
+          <div class="control-top"><b>التغطية السحابية (السحب الركامية)</b><span id="cloudVal">50%</span></div>
           <input type="range" id="cloud" min="0" max="100" value="50">
         </div>
       </div>
@@ -239,8 +155,8 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
           <circle cx="100" cy="100" r="86" fill="none" stroke="#1c2740" stroke-width="14"/>
           <circle id="gaugeArc" cx="100" cy="100" r="86" fill="none" stroke="var(--safe)" stroke-width="14"
                   stroke-linecap="round" transform="rotate(-90 100 100)"
-                  stroke-dasharray="540.35" stroke-dashoffset="540.35"/>
-          <text x="100" y="108" text-anchor="middle" fill="var(--text)" font-size="34" font-weight="700" id="gaugeText" font-family="IBM Plex Sans Arabic, sans-serif">0%</text>
+                  stroke-dasharray="540.35" stroke-dashoffset="540.35" style="transition: stroke-dashoffset 0.8s ease-out;"/>
+          <text x="100" y="112" text-anchor="middle" fill="var(--text)" font-size="34" font-weight="700" id="gaugeText" font-family="Cairo, sans-serif">0%</text>
         </svg>
         <div class="gauge-msg" id="gaugeMsg">أدخل القيم لحساب احتمالية جريان السيل</div>
       </div>
@@ -248,57 +164,25 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
   </div>
 </section>
 
-<section class="tech">
-  <div class="wrap">
-    <div class="eyebrow">القوة التقنية</div>
-    <h2>لماذا سَيْل جاهز فعليًا وليس مجرد فكرة؟</h2>
-    <div class="tech-grid">
-      <div class="tech-card">
-        <h3>معالجة بيانات ذكية</h3>
-        <p>حوادث السيول نادرة إحصائيًا، لذا استُخدمت تقنية موازنة البيانات SMOTE لمنع انحياز النموذج، ما يرفع دقة التنبؤ بشكل ملموس.</p>
-      </div>
-      <div class="tech-card">
-        <h3>واجهة تفاعلية مُقنعة</h3>
-        <p>تنقل الواجهة المستخدم من استيعاب المشكلة عبر الخريطة، إلى اختبار الحل عبر المحاكي، ليصبح النموذج الأولي عمليًا أمام اللجنة.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="future">
-  <div class="wrap">
-    <div class="eyebrow">الرؤية المستقبلية</div>
-    <h2>من أداة حماية إلى محرك اقتصادي</h2>
-    <p>بنية سَيْل مصممة لتكون قابلة للتوسع. في المراحل القادمة، ستُستخدم بيانات الاستشعار عن بعد والصور الطيفية لتحليل جيولوجيا المنطقة واكتشاف الموارد الطبيعية الكامنة.</p>
-    <div class="future-tags">
-      <span class="tag">مياه جوفية</span>
-      <span class="tag">معادن ثمينة</span>
-      <span class="tag">صور طيفية Hyperspectral</span>
-      <span class="tag">استثمار محلي</span>
-    </div>
-  </div>
-</section>
-
 <footer>مشروع سَيْل — الإنذار المبكر للسيول، من الفضاء إلى الأودية</footer>
 
 <script>
-// Time slider — valley memory
+// قسم ذاكرة الوادي
 const timeSlider = document.getElementById('timeSlider');
-const waterPath = document.getElementById('waterPath');
 const timestamp = document.getElementById('timestamp');
 const lbls = [document.getElementById('lbl0'), document.getElementById('lbl1'), document.getElementById('lbl2')];
+
+// تحديث النصوص لتطابق وصفك الدقيق للصور
 const phaseData = [
-  {opacity:.25, y:262, text:'وادي الأديرع — التربة جافة، لا مسطحات مائية ظاهرة'},
-  {opacity:.85, y:210, text:'وادي الأديرع — فيضان واضح، امتداد مائي كبير عبر مجرى الوادي (NDWI مرتفع)'},
-  {opacity:.4,  y:255, text:'وادي الأديرع — انحسار المياه تدريجيًا، بقاء مسارات رطبة في القاع'}
+  {text: 'المرحلة 1: تشكّل السحب الكثيفة فوق المنطقة وبداية هطول الأمطار.'},
+  {text: 'المرحلة 2: جريان السيول باندفاع في المجرى الرئيسي، وتغطية المياه للمناطق المنخفضة.'},
+  {text: 'المرحلة 3: انحسار المياه وظهور التربة مشبعة بالرطوبة العالية (باللون الأحمر).'}
 ];
+
 function phaseIndex(v){ return v < 34 ? 0 : v < 67 ? 1 : 2; }
 function renderTime(v){
   const idx = phaseIndex(v);
-  const d = phaseData[idx];
-  waterPath.setAttribute('opacity', d.opacity);
-  waterPath.setAttribute('d', `M 0 ${d.y} Q 200 ${d.y-12} 260 ${d.y+4} T 560 ${d.y-10} Q 700 ${d.y-15} 800 ${d.y} L 800 320 L 0 320 Z`);
-  timestamp.textContent = d.text;
+  timestamp.textContent = phaseData[idx].text;
   lbls.forEach((l,i)=> l.classList.toggle('phase-active', i===idx));
   document.querySelectorAll('.photo-strip .photo').forEach(img=>{
     img.classList.toggle('active', +img.dataset.phase === idx);
@@ -307,34 +191,59 @@ function renderTime(v){
 timeSlider.addEventListener('input', e=> renderTime(+e.target.value));
 renderTime(0);
 
-// Predictor simulator
+// قسم التنبؤ مع تأثير المحاكاة للذكاء الاصطناعي
 const rain = document.getElementById('rain'), soil = document.getElementById('soil'), cloud = document.getElementById('cloud');
 const rainVal = document.getElementById('rainVal'), soilVal = document.getElementById('soilVal'), cloudVal = document.getElementById('cloudVal');
 const gaugeArc = document.getElementById('gaugeArc'), gaugeText = document.getElementById('gaugeText'), gaugeMsg = document.getElementById('gaugeMsg');
 const valleySelect = document.getElementById('valleySelect');
 const CIRC = 540.35;
+let timeoutId;
 
-function compute(){
+function triggerSimulation(){
   const r = +rain.value, s = +soil.value, c = +cloud.value;
   rainVal.textContent = r + ' مم';
   soilVal.textContent = s + '%';
   cloudVal.textContent = c + '%';
-  const z = -6 + r*0.065 + s*0.045 + c*0.02;
-  const prob = 1/(1+Math.exp(-z));
-  const pct = Math.round(prob*100);
-  gaugeArc.setAttribute('stroke-dashoffset', CIRC - (CIRC*pct/100));
-  gaugeText.textContent = pct + '%';
-  const valley = valleySelect.value;
-  let color, msg;
-  if(pct >= 70){ color='var(--danger)'; msg = `<b>خطر سيل جارف بنسبة ${pct}%</b> في ${valley} — يُنصح بإصدار إنذار فوري.`; }
-  else if(pct >= 35){ color='var(--amber)'; msg = `احتمالية متوسطة (${pct}%) لجريان سيل في ${valley} — مراقبة مستمرة موصى بها.`; }
-  else { color='var(--safe)'; msg = `احتمالية منخفضة (${pct}%) لجريان سيل في ${valley} حاليًا.`; }
-  gaugeArc.style.stroke = color;
-  gaugeText.style.fill = color;
-  gaugeMsg.innerHTML = msg;
+  
+  // تأثير التحميل (جاري التحليل)
+  gaugeText.textContent = "...";
+  gaugeMsg.innerHTML = "جاري تحليل البيانات الفضائية...";
+  gaugeMsg.style.color = "var(--water)";
+  gaugeArc.style.stroke = "#1c2740";
+  gaugeArc.setAttribute('stroke-dashoffset', CIRC);
+  
+  clearTimeout(timeoutId);
+  timeoutId = setTimeout(() => {
+    // خوارزمية مبسطة تحاكي نموذج الانحدار اللوجستي
+    const z = -6 + r*0.065 + s*0.045 + c*0.02;
+    const prob = 1/(1+Math.exp(-z));
+    const pct = Math.round(prob*100);
+    
+    gaugeArc.setAttribute('stroke-dashoffset', CIRC - (CIRC*pct/100));
+    gaugeText.textContent = pct + '%';
+    
+    const valley = valleySelect.value;
+    let color, msg;
+    if(pct >= 70){ 
+        color='var(--danger)'; 
+        msg = `<b>خطر سيل جارف بنسبة ${pct}%</b> في ${valley} — يجب إطلاق الإنذار.`; 
+    } else if(pct >= 40){ 
+        color='var(--amber)'; 
+        msg = `احتمالية متوسطة (${pct}%) لجريان سيل في ${valley} — تتطلب مراقبة.`; 
+    } else { 
+        color='var(--safe)'; 
+        msg = `الوضع آمن (${pct}%) في ${valley} — لا توجد مخاطر سيول حالياً.`; 
+    }
+    
+    gaugeArc.style.stroke = color;
+    gaugeText.style.fill = color;
+    gaugeMsg.innerHTML = msg;
+    gaugeMsg.style.color = "var(--text-dim)";
+  }, 600); // تأخير زمني لمحاكاة سرعة معالجة النموذج
 }
-[rain, soil, cloud, valleySelect].forEach(el => el.addEventListener('input', compute));
-compute();
+
+[rain, soil, cloud, valleySelect].forEach(el => el.addEventListener('input', triggerSimulation));
+triggerSimulation();
 </script>
 </body>
 </html>
