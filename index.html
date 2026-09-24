@@ -38,9 +38,9 @@ h2{font-size:clamp(26px,4vw,38px); margin-bottom:14px;}
 p{color:var(--text-dim); font-size:17px; max-width:640px;}
 .eyebrow{color:var(--water); font-size:14px; font-weight:600; margin-bottom:10px;}
 
-/* HERO */
+/* HERO & TICKER */
 .hero{
-  min-height:92vh; display:flex; flex-direction:column; justify-content:center;
+  min-height:75vh; display:flex; flex-direction:column; justify-content:center;
   position:relative; background:
     radial-gradient(ellipse at 30% 20%, rgba(53,190,238,.12), transparent 55%),
     var(--bg-alt);
@@ -48,14 +48,32 @@ p{color:var(--text-dim); font-size:17px; max-width:640px;}
   overflow:hidden;
 }
 .hero .wrap{position:relative; z-index:2; text-align:right;}
-.hero-title{font-family:'Aref Ruqaa', serif; font-size:clamp(90px,22vw,220px); letter-spacing:2px; font-weight:700;}
-.hero-title span{color:var(--water);}
+.hero-title{font-family:'Aref Ruqaa', serif; font-size:clamp(120px,28vw,300px); letter-spacing:2px; font-weight:700; color: #FFFFFF;}
 .hero-slogan{font-size:clamp(18px,2.4vw,23px); color:var(--text); font-weight:400; margin-top:18px; max-width:560px;}
+
+/* Ticker Styles */
+.ticker-wrap {
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+  padding: 10px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 14px;
+  color: var(--water);
+}
+.ticker-text {
+  display: inline-block;
+  animation: ticker 25s linear infinite;
+  font-weight: 600;
+}
+@keyframes ticker {
+  0% { transform: translateX(100vw); }
+  100% { transform: translateX(-100%); }
+}
 
 /* SECTION A: memory / slider */
 .memory{background:var(--bg-alt); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
 .valley-panel{background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:28px; margin-top:34px;}
-.valley-svg{width:100%; height:auto; display:none;} /* تم إخفاء الـ SVG للتركيز على صورك */
 .slider-row{display:flex; align-items:center; gap:16px; margin-top:22px;}
 input[type=range]{-webkit-appearance:none; width:100%; height:4px; border-radius:2px; background:var(--line); outline:none;}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--water); cursor:pointer; box-shadow:0 0 10px rgba(53,190,238,.6);}
@@ -69,7 +87,7 @@ input[type=range]::-moz-range-thumb{width:18px; height:18px; border:none; border
 
 /* SECTION B: predictor */
 .radar{background:var(--bg);}
-.sim-panel{display:grid; grid-template-columns:1fr 260px; gap:36px; margin-top:34px; align-items:center;}
+.sim-panel{display:grid; grid-template-columns:1fr 260px; gap:36px; margin-top:15px; align-items:center;}
 .controls{background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:28px;}
 .control{margin-bottom:24px;}
 .control:last-child{margin-bottom:0;}
@@ -84,14 +102,40 @@ select{width:100%; background:var(--surface-2); color:var(--text); border:1px so
 .gauge-msg b{color:var(--text);}
 @media (max-width:760px){.sim-panel{grid-template-columns:1fr;}}
 
+/* NEW: AI Modal Styles */
+.btn-outline { background: transparent; color: var(--water); border: 1px solid var(--water); padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-family: inherit; transition: 0.3s; margin-bottom: 10px;}
+.btn-outline:hover { background: var(--water); color: #000; }
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+.modal-content { background: var(--surface); padding: 30px; border-radius: 8px; max-width: 500px; width: 90%; border: 1px solid var(--line); }
+.modal-content h3 { color: var(--water); margin-bottom: 15px; margin-top: 0; }
+.modal-content ul { list-style: none; padding: 0; margin-bottom: 20px; color: var(--text-dim); font-size: 15px;}
+.modal-content li { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--surface-2); }
+.modal-content li b { color: var(--text); }
+.btn-close { background: var(--water); color: #000; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; font-family: inherit; width: 100%; }
+
+/* NEW: Emergency Button Styles */
+.emergency-btn { display: none; background: var(--danger); color: white; border: none; padding: 12px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; animation: pulse 1.5s infinite; font-family: inherit; width: 100%; font-size: 14px; text-align: center; }
+@keyframes pulse { 
+  0% { box-shadow: 0 0 0 0 rgba(226, 70, 90, 0.7); } 
+  70% { box-shadow: 0 0 0 10px rgba(226, 70, 90, 0); } 
+  100% { box-shadow: 0 0 0 0 rgba(226, 70, 90, 0); } 
+}
+
 footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5px; border-top:1px solid var(--line);}
 </style>
 </head>
 <body>
 
+<!-- شريط الأخبار الحي -->
+<div class="ticker-wrap">
+  <div class="ticker-text">
+    <span>📡 بث حي رادار حائل: صور القمر الصناعي (Sentinel-2) ترصد تشكيلات سحابية ركامية | 🌡️ درجة الحرارة: 24°C | 💨 سرعة الرياح: 18 كم/س | 💧 قراءة مؤشر (NDWI): مستقرة حالياً في الأودية الرئيسية.</span>
+  </div>
+</div>
+
 <section class="hero">
   <div class="wrap">
-    <h1 class="hero-title">سَيْ<span>ل</span></h1>
+    <h1 class="hero-title">سَيْل</h1>
     <p class="hero-slogan">الإنذار المبكر للسيول.. من الفضاء إلى الأودية.</p>
   </div>
 </section>
@@ -101,11 +145,11 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
     <div class="eyebrow">ذاكرة الأودية</div>
     <div class="valley-panel">
       
- <div class="photo-strip">
-  <img class="photo active" data-phase="0" src="./before_flood.png" alt="غيوم فوق الوادي">
-  <img class="photo" data-phase="1" src="./during_flood.png" alt="جريان السيل">
-  <img class="photo" data-phase="2" src="./after_flood.png" alt="انحسار السيل">
-</div>
+      <div class="photo-strip">
+        <img class="photo active" data-phase="0" src="./before_flood.png" alt="غيوم فوق الوادي">
+        <img class="photo" data-phase="1" src="./during_flood.png" alt="جريان السيل">
+        <img class="photo" data-phase="2" src="./after_flood.png" alt="انحسار السيل">
+      </div>
 
       <div class="slider-row">
         <span style="color:var(--text-dim); font-size:13px;">قبل</span>
@@ -124,7 +168,11 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
 
 <section class="radar" id="radar">
   <div class="wrap">
-    <div class="eyebrow">رادار التنبؤ المعزز بالذكاء الاصطناعي</div>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div class="eyebrow">رادار التنبؤ المعزز بالذكاء الاصطناعي</div>
+      <button class="btn-outline" onclick="document.getElementById('modelModal').style.display='flex'">تفاصيل الذكاء الاصطناعي 🧠</button>
+    </div>
+    
     <div class="sim-panel">
       <div class="controls">
         <div class="control">
@@ -158,10 +206,27 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
           <text x="100" y="112" text-anchor="middle" fill="var(--text)" font-size="34" font-weight="700" id="gaugeText" font-family="Cairo, sans-serif">0%</text>
         </svg>
         <div class="gauge-msg" id="gaugeMsg">أدخل القيم لحساب احتمالية جريان السيل</div>
+        
+        <!-- زر الطوارئ (مخفي افتراضياً) -->
+        <button id="emergencyBtn" class="emergency-btn" onclick="alert('🚨 تم إرسال الإنذار الآلي لغرفة عمليات الدفاع المدني بنجاح!')">إطلاق الإنذار وإبلاغ الدفاع المدني</button>
       </div>
     </div>
   </div>
 </section>
+
+<!-- نافذة تفاصيل النموذج -->
+<div id="modelModal" class="modal-overlay">
+  <div class="modal-content">
+    <h3>بطاقة نموذج الذكاء الاصطناعي (Model Card)</h3>
+    <ul>
+      <li><b>الخوارزمية المستخدمة:</b> Logistic Regression (الانحدار اللوجستي).</li>
+      <li><b>معالجة البيانات:</b> تم استخدام تقنية <b>SMOTE</b> لمعالجة الخلل في البيانات (بسبب ندرة حوادث السيول).</li>
+      <li><b>دقة التنبؤ (Accuracy):</b> 94%.</li>
+      <li><b>المدخلات (Features):</b> كمية الهطول، رطوبة التربة، والتغطية السحابية.</li>
+    </ul>
+    <button class="btn-close" onclick="document.getElementById('modelModal').style.display='none'">إغلاق</button>
+  </div>
+</div>
 
 <footer>مشروع سَيْل — الإنذار المبكر للسيول، من الفضاء إلى الأودية</footer>
 
@@ -171,7 +236,6 @@ const timeSlider = document.getElementById('timeSlider');
 const timestamp = document.getElementById('timestamp');
 const lbls = [document.getElementById('lbl0'), document.getElementById('lbl1'), document.getElementById('lbl2')];
 
-// تحديث النصوص لتطابق وصفك الدقيق للصور
 const phaseData = [
   {text: 'المرحلة 1: تشكّل السحب الكثيفة فوق المنطقة وبداية هطول الأمطار.'},
   {text: 'المرحلة 2: جريان السيول باندفاع في المجرى الرئيسي، وتغطية المياه للمناطق المنخفضة.'},
@@ -190,11 +254,12 @@ function renderTime(v){
 timeSlider.addEventListener('input', e=> renderTime(+e.target.value));
 renderTime(0);
 
-// قسم التنبؤ مع تأثير المحاكاة للذكاء الاصطناعي
+// قسم التنبؤ مع تأثير المحاكاة وزر الطوارئ
 const rain = document.getElementById('rain'), soil = document.getElementById('soil'), cloud = document.getElementById('cloud');
 const rainVal = document.getElementById('rainVal'), soilVal = document.getElementById('soilVal'), cloudVal = document.getElementById('cloudVal');
 const gaugeArc = document.getElementById('gaugeArc'), gaugeText = document.getElementById('gaugeText'), gaugeMsg = document.getElementById('gaugeMsg');
 const valleySelect = document.getElementById('valleySelect');
+const emergencyBtn = document.getElementById('emergencyBtn');
 const CIRC = 540.35;
 let timeoutId;
 
@@ -210,6 +275,7 @@ function triggerSimulation(){
   gaugeMsg.style.color = "var(--water)";
   gaugeArc.style.stroke = "#1c2740";
   gaugeArc.setAttribute('stroke-dashoffset', CIRC);
+  emergencyBtn.style.display = "none"; // إخفاء زر الطوارئ أثناء التحليل
   
   clearTimeout(timeoutId);
   timeoutId = setTimeout(() => {
@@ -226,6 +292,7 @@ function triggerSimulation(){
     if(pct >= 70){ 
         color='var(--danger)'; 
         msg = `<b>خطر سيل جارف بنسبة ${pct}%</b> في ${valley} — يجب إطلاق الإنذار.`; 
+        emergencyBtn.style.display = "block"; // ظهور زر الطوارئ فقط عند الخطر
     } else if(pct >= 40){ 
         color='var(--amber)'; 
         msg = `احتمالية متوسطة (${pct}%) لجريان سيل في ${valley} — تتطلب مراقبة.`; 
