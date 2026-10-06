@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>سَيْل — الإنذار المبكر للسيول الجارفة في المملكة</title>
+<title>سَيْل — الإنذار المبكر للسيول الجارفة</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
@@ -16,6 +16,12 @@
   --sand:#CBA876;
   --danger:#E2465A; --amber:#EDA23F; --safe:#3FC98A;
   --text:#EAF1F8; --text-dim:#8C9AB4;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#F3F5F8; --bg-alt:#EAEEF3; --surface:#FFFFFF; --surface-2:#F0F3F7;
+    --line:#DCE2EA; --text:#101623; --text-dim:#5A6579;
+  }
 }
 *{box-sizing:border-box; margin:0; padding:0;}
 html{scroll-behavior:smooth;}
@@ -69,7 +75,7 @@ input[type=range]{-webkit-appearance:none; width:100%; height:4px; border-radius
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--water); cursor:pointer; box-shadow:0 0 10px rgba(53,190,238,.6);}
 
 .map-grid{display:grid; grid-template-columns:1fr 320px; gap:18px; margin-top:18px; align-items:stretch;}
-#map{direction:ltr; height:520px; border-radius:6px; border:1px solid var(--line); background:#111; z-index:1;}
+#map{direction:ltr; height:520px; border-radius:6px; border:1px solid var(--line); background:var(--surface-2); z-index:1;}
 .leaflet-container{font-family:'Cairo',sans-serif;}
 .leaflet-popup-content{direction:rtl; text-align:right; font-family:'Cairo',sans-serif; margin:12px 14px; line-height:1.7; font-size:14px; color:#101623;}
 .leaflet-popup-content .evac-msg{background:#E2465A; color:#fff; border-radius:4px; padding:6px 10px; margin:8px 0; font-weight:700;}
@@ -125,20 +131,20 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
 <section class="hero">
   <div class="wrap">
     <h1 class="hero-title">سَيْل</h1>
-    <p class="hero-slogan">الإنذار المبكر للسيول الجارفة.. رصد شامل لجميع مناطق المملكة والأودية الحساسة.</p>
+    <p class="hero-slogan">الإنذار المبكر للسيول الجارفة.. من الفضاء إلى الأودية والمناطق المتضررة.</p>
   </div>
 </section>
 
 <!-- ===== خريطة التنبؤ والإخلاء ===== -->
 <section class="forecast" id="forecast">
   <div class="wrap">
-    <div class="eyebrow">خريطة التنبؤ والإخلاء الوطنية</div>
-    <h2>أين سيحدث السيل الجارف في المملكة؟ ومن يجب إخلاؤه لحماية المباني؟</h2>
-    <p>يحلل النظام خريطة المملكة والأودية الحرجة المعرضة للخطر الفوري استناداً لبيانات الأقمار الصناعية للرصد المطرى والتشبع الأرضي.</p>
+    <div class="eyebrow">خريطة التنبؤ والإخلاء الفضائية</div>
+    <h2>أين سيحدث السيل الجارف؟ ومن يجب إخلاؤه لحماية المباني؟</h2>
+    <p>يحلل النظام بيانات الأقمار الصناعية (NASA POWER) لمناطق حائل وباقي مناطق المملكة لتحديد خطورة خروج الأودية عن مسارها.</p>
 
     <div class="alert-banner" id="topAlert">
       <div class="ico">⏳</div>
-      <div class="txt">جاري تحليل بيانات الرصد الفضائي للمملكة...</div>
+      <div class="txt">جاري تحليل بيانات الرصد الفضائي...</div>
     </div>
 
     <div class="day-ctl">
@@ -159,7 +165,7 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
     
     <div class="legend">
       <span><i style="background:var(--danger)"></i>سيل جارف يهدد المباني — إخلاء فوري (70%+)</span>
-      <span><i style="background:var(--amber)"></i>مراقبة الوادي والمنطقة (40–69%)</span>
+      <span><i style="background:var(--amber)"></i>مراقبة الوادي (40–69%)</span>
       <span><i style="background:var(--safe)"></i>آمن (أقل من 40%)</span>
     </div>
   </div>
@@ -174,7 +180,7 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
     <div class="sim-panel">
       <div class="controls">
         <div class="control">
-          <div class="control-top"><b>📍 الموقع أو الوادي المستهدف في المملكة</b></div>
+          <div class="control-top"><b>📍 الموقع أو الوادي المستهدف</b></div>
           <select id="valleySelect"><option>—</option></select>
         </div>
         <div class="control">
@@ -206,7 +212,7 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
   </div>
 </section>
 
-<footer>مشروع سَيْل — الإنذار المبكر للسيول، من الفضاء إلى مدن وأودية المملكة</footer>
+<footer>مشروع سَيْل — الإنذار المبكر للسيول، من الفضاء إلى الأودية (هاكاثون الفضاء)</footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -222,43 +228,28 @@ function level(p){
 }
 const EVAC_AT = 70;
 
-/* قاعدة بيانات شاملة وموزعة بدقة على كافة مناطق المملكة والأودية الحرجة */
+/* قاعدة بيانات تبدأ بمناطق حائل (قرية العش، وادي الأديرع، عقدة) تليها مناطق المملكة */
 const EMBEDDED_DATA = `date,place,lat,lng,rain_mm,soil_pct,cloud_pct
 2026-10-07,قرية العش (حائل),27.5200,41.6900,4,21,20
-2026-10-07,وادي الأديرع (حائل),27.5250,41.6950,5,20,21
-2026-10-07,حي النسيم (شرق جدة),21.5433,39.1728,2,19,27
-2026-10-07,وادي حنيفة (الرياض),24.6333,46.6167,3,20,22
-2026-10-07,وادي السيل الكبير (مكة المكرمة),21.5167,40.2500,2,22,25
-2026-10-07,وادي بيش (جازان),16.8894,42.5511,1,22,19
-2026-10-07,وادي أبها (عسير),18.2164,42.5053,5,23,23
-2026-10-07,وادي الرمة (القصيم),26.3260,43.9750,2,21,20
-2026-10-07,وادي العقيق (المدينة المنورة),24.4672,39.6112,1,18,17
-2026-10-07,وادي الديسة (تبوك),27.5833,36.5000,1,18,15
-2026-10-07,وادي بيشة (عسير/مكة),20.0000,42.6000,2,20,21
+2026-10-07,وادي الأديرع - وسط حائل,27.5250,41.6950,5,20,21
+2026-10-07,قرية عقدة الجبلية (حائل),27.4450,41.6150,4,25,28
+2026-10-07,سيول شرق جدة,21.5433,39.1728,2,19,27
+2026-10-07,أبها - وادي أبها وجنوب السراات,18.2164,42.5053,5,23,23
+2026-10-07,جازان - وادي بيش,16.8894,42.5511,1,22,19
 
 2026-10-08,قرية العش (حائل),27.5200,41.6900,94,26,98
-2026-10-08,وادي الأديرع (حائل),27.5250,41.6950,85,25,85
-2026-10-08,حي النسيم (شرق جدة),21.5433,39.1728,70,23,80
-2026-10-08,وادي حنيفة (الرياض),24.6333,46.6167,65,24,78
-2026-10-08,وادي السيل الكبير (مكة المكرمة),21.5167,40.2500,80,28,88
-2026-10-08,وادي بيش (جازان),16.8894,42.5511,88,27,92
-2026-10-08,وادي أبها (عسير),18.2164,42.5053,60,25,75
-2026-10-08,وادي الرمة (القصيم),26.3260,43.9750,72,24,80
-2026-10-08,وادي العقيق (المدينة المنورة),24.4672,39.6112,55,21,65
-2026-10-08,وادي الديسة (تبوك),27.5833,36.5000,50,20,60
-2026-10-08,وادي بيشة (عسير/مكة),20.0000,42.6000,78,26,84
+2026-10-08,وادي الأديرع - وسط حائل,27.5250,41.6950,85,25,85
+2026-10-08,قرية عقدة الجبلية (حائل),27.4450,41.6150,90,29,90
+2026-10-08,سيول شرق جدة,21.5433,39.1728,70,23,80
+2026-10-08,أبها - وادي أبها وجنوب السراات,18.2164,42.5053,60,25,75
+2026-10-08,جازان - وادي بيش,16.8894,42.5511,88,27,92
 
 2026-10-09,قرية العش (حائل),27.5200,41.6900,98,75,95
-2026-10-09,وادي الأديرع (حائل),27.5250,41.6950,105,80,98
-2026-10-09,حي النسيم (شرق جدة),21.5433,39.1728,95,70,92
-2026-10-09,وادي حنيفة (الرياض),24.6333,46.6167,88,68,90
-2026-10-09,وادي السيل الكبير (مكة المكرمة),21.5167,40.2500,110,85,99
-2026-10-09,وادي بيش (جازان),16.8894,42.5511,115,82,96
-2026-10-09,وادي أبها (عسير),18.2164,42.5053,90,68,90
-2026-10-09,وادي الرمة (القصيم),26.3260,43.9750,96,78,94
-2026-10-09,وادي العقيق (المدينة المنورة),24.4672,39.6112,85,65,88
-2026-10-09,وادي الديسة (تبوك),27.5833,36.5000,75,60,85
-2026-10-09,وادي بيشة (عسير/مكة),20.0000,42.6000,102,80,97`;
+2026-10-09,وادي الأديرع - وسط حائل,27.5250,41.6950,105,80,98
+2026-10-09,قرية عقدة الجبلية (حائل),27.4450,41.6150,110,85,99
+2026-10-09,سيول شرق جدة,21.5433,39.1728,95,70,92
+2026-10-09,أبها - وادي أبها وجنوب السراات,18.2164,42.5053,90,68,90
+2026-10-09,جازان - وادي بيش,16.8894,42.5511,115,82,96`;
 
 let DATA = [], DAYS = [], map, layer, mapReady = false;
 
@@ -284,14 +275,14 @@ function fmtDate(d){
 
 function initMap(){
   if(mapReady) return;
-  // تركيز الخريطة بشكل جميل على وسط المملكة لتغطي كافة المناطق
-  map = L.map('map', {zoomControl:true}).setView([24.5, 44.5], 6);
+  map = L.map('map', {zoomControl:true}).setView([27.52, 41.69], 8);
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {maxZoom:19, attribution:'© OpenStreetMap contributors'}
   ).addTo(map);
   layer = L.layerGroup().addTo(map);
   mapReady = true;
+  setTimeout(() => { map.invalidateSize(); }, 200);
 }
 
 function loadToRadar(r){
@@ -313,7 +304,7 @@ function renderDay(){
     const lv = level(r.prob);
     const evac = r.prob >= EVAC_AT;
     if(evac){
-      L.circle([r.lat, r.lng], {radius:25000, color:lv.color, weight:2, fillColor:lv.color, fillOpacity:.25, dashArray:'6 6'}).addTo(layer);
+      L.circle([r.lat, r.lng], {radius:12000, color:lv.color, weight:2, fillColor:lv.color, fillOpacity:.28, dashArray:'6 6'}).addTo(layer);
     }
     const popup = `<b>${r.place}</b><br>احتمال السيل الجارف: <b>${r.prob}%</b> (${lv.label})<br>
       🌧️ الأمطار: ${r.rain} مم · 🌱 رطوبة التربة: ${r.soil}% · ☁️ السحب: ${r.cloud}%
@@ -343,7 +334,7 @@ function renderDay(){
   }
 
   const list = document.getElementById('placeList');
-  list.innerHTML = '<h3>المناطق والأودية حسب الخطورة</h3>';
+  list.innerHTML = '<h3>المواقع والأودية حسب الخطورة</h3>';
   rows.forEach((r,i)=>{
     const lv = level(r.prob);
     const b = document.createElement('button');
@@ -351,12 +342,12 @@ function renderDay(){
     b.innerHTML = `<div class="row-top"><b>${r.prob>=EVAC_AT?'🚨 ':''}${r.place}</b><span style="color:${lv.color}">${r.prob}%</span></div>
       <div class="bar"><i style="width:${r.prob}%; background:${lv.color}"></i></div>
       <div class="row-meta">${r.prob>=EVAC_AT ? '⚡ إخلاء فوري للمباني · ' : ''}🌧️ ${r.rain} مم · 🌱 ${r.soil}%</div>`;
-    b.onclick = ()=>{ map.setView([r.lat, r.lng], 8); r._m.openPopup(); };
+    b.onclick = ()=>{ map.setView([r.lat, r.lng], 10); r._m.openPopup(); };
     list.appendChild(b);
   });
 
   if(!renderDay.fitted){
-    map.fitBounds(L.latLngBounds(DATA.map(r=>[r.lat, r.lng])).pad(.2));
+    map.setView([27.52, 41.69], 8);
     renderDay.fitted = true;
   }
   syncRadar();
@@ -374,7 +365,7 @@ function worstDayIndex(){
 function initSystem(){
   DATA = parseCSV(EMBEDDED_DATA);
   DAYS = [...new Set(DATA.map(r=>r.date))].sort();
-  document.getElementById('dataSrc').textContent = 'بيانات الأقمار الصناعية لمدن وأودية المملكة — ' + DATA.length + ' موقع رصد · ' + DAYS.length + ' أيام';
+  document.getElementById('dataSrc').textContent = 'بيانات الأقمار الصناعية (NASA POWER) — ' + DATA.length + ' موقع مستهدف · ' + DAYS.length + ' أيام رصد';
   const ds = document.getElementById('daySlider');
   ds.max = Math.max(0, DAYS.length-1);
   ds.value = worstDayIndex();
