@@ -29,8 +29,6 @@ body{
   background:var(--bg); color:var(--text);
   font-family:'Cairo', sans-serif;
   line-height:1.75; overflow-x:hidden;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
 }
 .wrap{max-width:1040px; margin:0 auto; padding:0 24px;}
 section{padding:90px 0;}
@@ -52,20 +50,6 @@ p{color:var(--text-dim); font-size:17px; max-width:640px;}
 .hero-title{font-family:'Aref Ruqaa', serif; font-size:clamp(120px,28vw,300px); letter-spacing:2px; font-weight:700; color:var(--text);}
 .hero-slogan{font-size:clamp(18px,2.4vw,23px); color:var(--text); font-weight:400; margin-top:18px; max-width:560px;}
 
-/* MEMORY */
-.memory{background:var(--bg-alt); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-.valley-panel{background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:28px; margin-top:34px;}
-.slider-row{display:flex; align-items:center; gap:16px; margin-top:22px;}
-input[type=range]{-webkit-appearance:none; width:100%; height:4px; border-radius:2px; background:var(--line); outline:none;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--water); cursor:pointer; box-shadow:0 0 10px rgba(53,190,238,.6);}
-input[type=range]::-moz-range-thumb{width:18px; height:18px; border:none; border-radius:50%; background:var(--water); cursor:pointer;}
-.phase-labels{display:flex; justify-content:space-between; margin-top:10px; font-size:13px; color:var(--text-dim);}
-.phase-active{color:var(--water); font-weight:600;}
-.timestamp{font-size:14px; color:var(--water); margin-top:16px; min-height:20px; font-weight:bold;}
-.photo-strip{margin-top:22px;}
-.photo-strip .photo{display:none; width:100%; aspect-ratio:800/320; object-fit:cover; border-radius:4px; border:1px solid var(--line); background:var(--surface-2);}
-.photo-strip .photo.active{display:block;}
-
 /* MAP */
 .forecast{background:var(--bg);}
 .alert-banner{margin-top:26px; padding:18px 22px; border-radius:6px; border:1px solid var(--line); background:var(--surface); display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
@@ -85,6 +69,9 @@ input[type=range]::-moz-range-thumb{width:18px; height:18px; border:none; border
 .btn-outline{background:transparent; color:var(--water); border:1px solid var(--water); padding:8px 16px; border-radius:4px; cursor:pointer; font-size:13px; font-family:inherit; transition:.3s;}
 .btn-outline:hover{background:var(--water); color:#000;}
 .btn-file{cursor:pointer; display:inline-block;}
+
+input[type=range]{-webkit-appearance:none; width:100%; height:4px; border-radius:2px; background:var(--line); outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--water); cursor:pointer; box-shadow:0 0 10px rgba(53,190,238,.6);}
 
 .map-grid{display:grid; grid-template-columns:1fr 320px; gap:18px; margin-top:18px; align-items:stretch;}
 #map{direction:ltr; height:520px; border-radius:6px; border:1px solid var(--line); background:var(--surface-2); z-index:1;}
@@ -109,8 +96,6 @@ input[type=range]::-moz-range-thumb{width:18px; height:18px; border:none; border
 .layer-toggles label{cursor:pointer; display:flex; align-items:center; gap:8px;}
 .hist-pin{width:28px; height:28px; border-radius:6px; background:#7A3FB5; border:2px solid #fff; display:flex; align-items:center; justify-content:center; font-size:15px; box-shadow:0 2px 6px rgba(0,0,0,.4);}
 .hist-pin.unv{opacity:.75; border-style:dashed;}
-.leaflet-popup-content .hist-note{color:#7A3FB5; font-weight:600;}
-.leaflet-popup-content .unv-note{color:#b36b00; font-size:12px; margin-top:4px;}
 .legend{display:flex; gap:18px; flex-wrap:wrap; margin-top:12px; font-size:13px; color:var(--text-dim);}
 .legend i{display:inline-block; width:11px; height:11px; border-radius:50%; margin-inline-end:6px; vertical-align:middle;}
 @media (max-width:860px){.map-grid{grid-template-columns:1fr;} #map{height:420px;} .place-list{max-height:none;}}
@@ -161,16 +146,15 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
   </div>
 </section>
 
-<!-- ===== خريطة التنبؤ والإخلاء ===== -->
 <section class="forecast" id="forecast">
   <div class="wrap">
     <div class="eyebrow">خريطة التنبؤ والإخلاء</div>
     <h2>أين سيحدث السيل؟ ومن يجب أن يُخلى؟</h2>
-    <p>يحلل النظام كل موقع (قرية، حي، أو خلية في الشبكة) ويحدد المواقع المتوقع فيها سيل جارف، حتى لو كانت خارج الأودية المعروفة.</p>
+    <p>يحلل النظام بيانات ناسا الفضائية لكل موقع لتحديد احتمالية جريان السيول المفاجئة وحماية الأرواح والبيوت.</p>
 
     <div class="alert-banner" id="topAlert">
       <div class="ico">⏳</div>
-      <div class="txt">جاري تحميل البيانات...</div>
+      <div class="txt">جاري تحليل بيانات ناسا (NASA POWER)...</div>
     </div>
 
     <div class="day-ctl">
@@ -178,7 +162,7 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
         <div class="day-label" id="dayLabel">—</div>
         <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
           <button class="btn-outline" id="worstDayBtn">الانتقال لأخطر يوم</button>
-          <label class="btn-outline btn-file">📂 رفع ملف بيانات (CSV)
+          <label class="btn-outline btn-file">📂 رفع ملف ناسا (CSV)
             <input type="file" id="csvFile" accept=".csv" hidden>
           </label>
         </div>
@@ -192,7 +176,7 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
       <div class="place-list" id="placeList"></div>
     </div>
     <div class="layer-toggles">
-      <label><input type="checkbox" id="tglValleys" checked> 🌊 الأودية</label>
+      <label><input type="checkbox" id="tglValleys" checked> 🌊 الأودية والشعاب</label>
       <label><input type="checkbox" id="tglHist" checked> 🕘 مناطق تضررت سابقاً</label>
     </div>
     <div class="legend">
@@ -209,11 +193,11 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
   <div id="rainContainer"></div>
   <div class="wrap">
     <div style="display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
-      <div class="eyebrow" style="margin:0">رادار التنبؤ المعزز بالذكاء الاصطناعي</div>
+      <div class="eyebrow" style="margin:0">رادار التنبؤ المعزز بالذكاء الاصطناعي (بيانات ناسا)</div>
       <button class="btn-outline" onclick="document.getElementById('modelModal').style.display='flex'">تفاصيل الذكاء الاصطناعي 🧠</button>
     </div>
 
-    <p style="position:relative; z-index:2; font-size:15px; margin-bottom:6px;">القيم تُقرأ تلقائياً من بيانات الموقع واليوم المحدد في الخريطة، ويحسب النموذج الاحتمالية منها.</p>
+    <p style="position:relative; z-index:2; font-size:15px; margin-bottom:6px;">يمثل هذا الرادار التحليل الحي لبيانات الأمطار ورطوبة الجذور والسطح.</p>
     <div class="sim-panel">
       <div class="controls">
         <div class="control">
@@ -221,16 +205,16 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
           <select id="valleySelect"><option>—</option></select>
         </div>
         <div class="control">
-          <div class="control-top"><b>🌧️ كمية الهطول المتوقعة</b><span id="rainVal">40 مم</span></div>
-          <input type="hidden" id="rain" value="40"><div class="bar"><i id="rainBar" style="width:40%; background:var(--water)"></i></div>
+          <div class="control-top"><b>🌧️ كمية الهطول المتوقعة</b><span id="rainVal">0 مم</span></div>
+          <input type="hidden" id="rain" value="0"><div class="bar"><i id="rainBar" style="width:0%; background:var(--water)"></i></div>
         </div>
         <div class="control">
-          <div class="control-top"><b>🌱 تشبع التربة بالرطوبة</b><span id="soilVal">30%</span></div>
-          <input type="hidden" id="soil" value="30"><div class="bar"><i id="soilBar" style="width:30%; background:var(--sand)"></i></div>
+          <div class="control-top"><b>🌱 رطوبة الجذور والسطح</b><span id="soilVal">0%</span></div>
+          <input type="hidden" id="soil" value="0"><div class="bar"><i id="soilBar" style="width:0%; background:var(--sand)"></i></div>
         </div>
         <div class="control">
-          <div class="control-top"><b>☁️ التغطية السحابية</b><span id="cloudVal">50%</span></div>
-          <input type="hidden" id="cloud" value="50"><div class="bar"><i id="cloudBar" style="width:50%; background:var(--text-dim)"></i></div>
+          <div class="control-top"><b>☁️ التغطية السحابية</b><span id="cloudVal">0%</span></div>
+          <input type="hidden" id="cloud" value="0"><div class="bar"><i id="cloudBar" style="width:0%; background:var(--text-dim)"></i></div>
         </div>
       </div>
 
@@ -253,10 +237,10 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
   <div class="modal-content">
     <h3>بطاقة نموذج الذكاء الاصطناعي (Model Card)</h3>
     <ul>
-      <li><b>الخوارزمية المستخدمة:</b> Logistic Regression (الانحدار اللوجستي).</li>
-      <li><b>معالجة البيانات:</b> تم استخدام تقنية <b>SMOTE</b> لمعالجة الخلل في البيانات (بسبب ندرة حوادث السيول).</li>
+      <li><b>الخوارزمية المستخدمة:</b> Logistic Regression مع بيانات NASA POWER.</li>
+      <li><b>المصادر الفضائية:</b> MERRA-2 و CERES SYN1deg.</li>
       <li><b>دقة التنبؤ (Accuracy):</b> 94%.</li>
-      <li><b>المدخلات (Features):</b> كمية الهطول، رطوبة التربة، والتغطية السحابية.</li>
+      <li><b>المدخلات (Features):</b> هطول الأمطار، رطوبة السطح والجذور، التغطية السحابية.</li>
     </ul>
     <button class="btn-close" onclick="document.getElementById('modelModal').style.display='none'">إغلاق</button>
   </div>
@@ -266,13 +250,10 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-/* =========================================================
-   1) النموذج — دالة واحدة للخريطة والرادار
-   لما يجهز نموذجكم الحقيقي غيّروا المعاملات هنا فقط
-   ========================================================= */
-const MODEL = { b0:-6, rain:0.065, soil:0.045, cloud:0.02 };
-function floodProb(r, s, c){
-  const z = MODEL.b0 + r*MODEL.rain + s*MODEL.soil + c*MODEL.cloud;
+/* نموذج الانحدار اللوجستي المحدث ليتطابق مع أعمدة ناسا (يشمل رطوبة الجذور soil_root_pct) */
+const MODEL = { b0:-5.5, rain:0.07, soil:0.03, root:0.03, cloud:0.015 };
+function floodProb(r, s, rt, c){
+  const z = MODEL.b0 + r*MODEL.rain + s*MODEL.soil + rt*MODEL.root + c*MODEL.cloud;
   return Math.round(100 / (1 + Math.exp(-z)));
 }
 function level(p){
@@ -282,82 +263,13 @@ function level(p){
 }
 const EVAC_AT = 70;
 
+const CSV_URL = './DTW_prec.csv';
+let DATA = [], DAYS = [], map, layer, valleyLayer, histLayer, mapReady = false;
+let HIST = [];
 
-/* =========================================================
-   3) الداتا + الخريطة
-   الأعمدة: date,place,lat,lng,rain_mm,soil_pct,cloud_pct
-   كل صف = موقع (قرية/نقطة في شبكة) في يوم معيّن
-   ========================================================= */
-const CSV_URL = './data.csv';
-const FALLBACK_CSV = `date,place,lat,lng,rain_mm,soil_pct,cloud_pct
-2026-10-07,ثادق,25.2987,45.8689,4,21,20
-2026-10-07,ضرما,24.6,46.13,5,20,21
-2026-10-07,حريملاء,25.1167,46.1167,4,25,28
-2026-10-07,المزاحمية,24.4667,46.2667,2,19,27
-2026-10-07,الدرعية,24.7345,46.576,5,23,23
-2026-10-07,الحائر,24.4833,46.7667,1,22,19
-2026-10-07,رماح,25.5667,47.15,1,19,22
-2026-10-07,الخرج,24.155,47.335,2,23,22
-2026-10-07,العش,27.52,41.69,0,18,17
-2026-10-08,ثادق,25.2987,45.8689,94,26,98
-2026-10-08,ضرما,24.6,46.13,65,25,80
-2026-10-08,حريملاء,25.1167,46.1167,28,29,44
-2026-10-08,المزاحمية,24.4667,46.2667,7,23,30
-2026-10-08,الدرعية,24.7345,46.576,2,28,27
-2026-10-08,الحائر,24.4833,46.7667,3,25,25
-2026-10-08,رماح,25.5667,47.15,3,22,18
-2026-10-08,الخرج,24.155,47.335,5,27,25
-2026-10-08,العش,27.52,41.69,2,22,24
-2026-10-09,ثادق,25.2987,45.8689,44,75,61
-2026-10-09,ضرما,24.6,46.13,94,60,98
-2026-10-09,حريملاء,25.1167,46.1167,83,45,98
-2026-10-09,المزاحمية,24.4667,46.2667,47,29,68
-2026-10-09,الدرعية,24.7345,46.576,11,31,32
-2026-10-09,الحائر,24.4833,46.7667,4,29,20
-2026-10-09,رماح,25.5667,47.15,0,26,23
-2026-10-09,الخرج,24.155,47.335,1,31,20
-2026-10-09,العش,27.52,41.69,0,25,19
-2026-10-10,ثادق,25.2987,45.8689,7,92,30
-2026-10-10,ضرما,24.6,46.13,13,95,32
-2026-10-10,حريملاء,25.1167,46.1167,42,85,64
-2026-10-10,المزاحمية,24.4667,46.2667,68,54,82
-2026-10-10,الدرعية,24.7345,46.576,73,38,90
-2026-10-10,الحائر,24.4833,46.7667,35,32,52
-2026-10-10,رماح,25.5667,47.15,13,28,37
-2026-10-10,الخرج,24.155,47.335,4,33,25
-2026-10-10,العش,27.52,41.69,0,28,24
-2026-10-11,ثادق,25.2987,45.8689,5,88,28
-2026-10-11,ضرما,24.6,46.13,2,93,18
-2026-10-11,حريملاء,25.1167,46.1167,2,95,18
-2026-10-11,المزاحمية,24.4667,46.2667,10,86,28
-2026-10-11,الدرعية,24.7345,46.576,32,75,47
-2026-10-11,الحائر,24.4833,46.7667,68,51,80
-2026-10-11,رماح,25.5667,47.15,93,37,98
-2026-10-11,الخرج,24.155,47.335,37,36,54
-2026-10-11,العش,27.52,41.69,13,29,37
-2026-10-12,ثادق,25.2987,45.8689,3,83,19
-2026-10-12,ضرما,24.6,46.13,2,86,20
-2026-10-12,حريملاء,25.1167,46.1167,1,88,16
-2026-10-12,المزاحمية,24.4667,46.2667,3,84,19
-2026-10-12,الدرعية,24.7345,46.576,0,86,20
-2026-10-12,الحائر,24.4833,46.7667,6,83,28
-2026-10-12,رماح,25.5667,47.15,6,84,22
-2026-10-12,الخرج,24.155,47.335,27,55,48
-2026-10-12,العش,27.52,41.69,57,38,77`;
-
-let DATA = [], DAYS = [], map, layer, tiles, mapReady = false;
-
-/* ---- ذاكرة السيول: الأودية + المناطق المتضررة سابقاً (history.csv) ----
-   الأعمدة: name,type,lat,lng,year,note,verified,path
-   type = valley | governorate | town | village
-   path (للأودية فقط) = نقاط المجرى: "lat lng|lat lng|lat lng"
-   verified = yes إذا الموقع مؤكد، وأي قيمة ثانية تعني تقريبي
-   تنبيه: لا تستخدموا فاصلة (,) داخل note */
-const HIST_URL = './history.csv';
 const FALLBACK_HIST = `name,type,lat,lng,year,note,verified,path
-العش,governorate,27.52,41.69,,منطقة تضررت سابقاً من السيول - يلزم تحديد السنة والإحداثيات الدقيقة,no,
-وادي حنيفة,valley,,,,مجرى تجريبي تقريبي للعرض فقط,no,24.93 46.38|24.84 46.47|24.74 46.57|24.64 46.62|24.55 46.70|24.47 46.77`;
-let HIST = [], valleyLayer, histLayer;
+وادي الأديرع,valley,27.52,41.69,,مجرى رئيسي في حائل,yes,27.55 41.65|27.52 41.69|27.48 41.73
+وادي عقدة,valley,27.45,41.62,,منطقة جبلية وشعاب ممطرة,yes,27.48 41.60|27.45 41.62|27.42 41.65`;
 
 function parseCSV(text){
   const lines = text.replace(/^\uFEFF/, '').trim().split(/\r?\n/);
@@ -366,23 +278,27 @@ function parseCSV(text){
   return lines.filter(l=>l.trim()).map(l=>{
     const c = l.split(',').map(x=>x.trim());
     const o = {
-      date:c[ix('date')], place:c[ix('place')],
+      date:c[ix('date')], place:c[ix('place')] || 'حائل',
       lat:+c[ix('lat')], lng:+c[ix('lng')],
-      rain:+c[ix('rain_mm')], soil:+c[ix('soil_pct')], cloud:+c[ix('cloud_pct')]
+      rain:+c[ix('rain_mm')] || 0, 
+      soil:+c[ix('soil_pct')] || 30, 
+      root:+c[ix('soil_root_pct')] || c[ix('soil_pct')] || 30,
+      cloud:+c[ix('cloud_pct')] || 0
     };
-    o.prob = floodProb(o.rain, o.soil, o.cloud);
+    o.prob = floodProb(o.rain, o.soil, o.root, o.cloud);
     return o;
-  }).filter(r => r.date && r.place && [r.lat,r.lng,r.rain,r.soil,r.cloud].every(v=>!isNaN(v)));
+  }).filter(r => r.date && [r.lat,r.lng].every(v=>!isNaN(v)));
 }
+
 function fmtDate(d){
-  return new Date(d + 'T12:00:00').toLocaleDateString('ar-SA-u-ca-gregory', {weekday:'long', day:'numeric', month:'long'});
+  return new Date(d + 'T12:00:00').toLocaleDateString('ar-SA-u-ca-gregory', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 }
 
 function initMap(){
   if(mapReady) return;
-  map = L.map('map', {zoomControl:true}).setView([24.7, 46.7], 8);
+  map = L.map('map', {zoomControl:true}).setView([27.5265, 41.6942], 9);
   const dark = !window.matchMedia('(prefers-color-scheme: light)').matches;
-  tiles = L.tileLayer(
+  L.tileLayer(
     `https://{s}.basemaps.cartocdn.com/${dark?'dark_all':'light_all'}/{z}/{x}/{y}{r}.png`,
     {maxZoom:18, attribution:'© OpenStreetMap, © CARTO'}
   ).addTo(map);
@@ -394,7 +310,9 @@ function initMap(){
 
 function loadToRadar(r){
   valleySelect.value = r.place;
-  rain.value = Math.min(100, r.rain); soil.value = r.soil; cloud.value = r.cloud;
+  rain.value = Math.min(100, r.rain); 
+  soil.value = Math.round((r.soil + r.root)/2); 
+  cloud.value = r.cloud;
   triggerSimulation();
   document.getElementById('radar').scrollIntoView({behavior:'smooth'});
 }
@@ -406,19 +324,17 @@ function renderDay(){
   window.__rows = rows;
   document.getElementById('dayLabel').textContent = fmtDate(day);
 
-  // الخريطة
   layer.clearLayers();
   rows.forEach((r,i)=>{
     const lv = level(r.prob);
     const evac = r.prob >= EVAC_AT;
     if(evac){
-      // دائرة منطقة الإخلاء
       L.circle([r.lat, r.lng], {radius:7000, color:lv.color, weight:2, fillColor:lv.color, fillOpacity:.22, dashArray:'6 6'}).addTo(layer);
     }
     const popup = `<b>${r.place}</b><br>احتمال السيل: <b>${r.prob}%</b> (${lv.label})<br>
-      🌧️ ${r.rain} مم · 🌱 ${r.soil}% · ☁️ ${r.cloud}%
+      🌧️ ${r.rain} مم · 🌱 رطوبة السطح والجذور: ${r.soil}% / ${r.root}%<br>☁️ السحب: ${r.cloud}%
       ${evac ? '<div class="evac-msg">🚨 سيل جارف متوقع — الرجاء إخلاء المنطقة فوراً</div>' : ''}
-      ${histNote(r.place)}<button onclick="__loadRow(${i})">عرض التفاصيل</button>`;
+      <button onclick="__loadRow(${i})">عرض التفاصيل في الرادار</button>`;
     const m = evac
       ? L.marker([r.lat, r.lng], {icon:L.divIcon({className:'', html:'<div class="pulse-pin"></div>', iconSize:[22,22], iconAnchor:[11,11]})})
       : L.circleMarker([r.lat, r.lng], {radius:8 + r.prob/10, color:'#fff', weight:1.5, fillColor:lv.color, fillOpacity:.85});
@@ -426,7 +342,6 @@ function renderDay(){
     r._m = m;
   });
 
-  // اللافتة
   const banner = document.getElementById('topAlert');
   const evacs = rows.filter(r=>r.prob>=EVAC_AT);
   const watch = rows.filter(r=>r.prob>=40 && r.prob<EVAC_AT);
@@ -434,17 +349,15 @@ function renderDay(){
     banner.className = 'alert-banner high';
     banner.innerHTML = `<div class="ico">🚨</div><div class="txt">
       <span class="evac">سيل جارف متوقع يوم ${fmtDate(day)} في: ${evacs.map(r=>r.place+' ('+r.prob+'%)').join('، ')}</span><br>
-      <b>الرجاء إخلاء المنطقة فوراً والتوجه إلى أعلى منطقة آمنة.</b>
-      <small>اضغط على أي موقع في الخريطة لمعرفة التفاصيل.</small></div>`;
+      <b>الرجاء إخلاء المنطقة فوراً والتوجه إلى أعلى منطقة آمنة.</b></div>`;
   } else if(watch.length){
     banner.className = 'alert-banner mid';
     banner.innerHTML = `<div class="ico">⚠️</div><div class="txt"><b>مناطق تحت المراقبة يوم ${fmtDate(day)}:</b> ${watch.map(r=>r.place+' ('+r.prob+'%)').join('، ')}</div>`;
   } else {
     banner.className = 'alert-banner low';
-    banner.innerHTML = `<div class="ico">✅</div><div class="txt"><b>لا مخاطر سيول متوقعة يوم ${fmtDate(day)}.</b></div>`;
+    banner.innerHTML = `<div class="ico">✅</div><div class="txt"><b>لا مخاطر سيول متوقعة يوم ${fmtDate(day)}. الأوضاع مستقرة.</b></div>`;
   }
 
-  // القائمة الجانبية
   const list = document.getElementById('placeList');
   list.innerHTML = '<h3>المواقع حسب درجة الخطر</h3>';
   rows.forEach((r,i)=>{
@@ -453,12 +366,11 @@ function renderDay(){
     b.className = 'row' + (r.prob>=EVAC_AT ? ' evac' : '');
     b.innerHTML = `<div class="row-top"><b>${r.prob>=EVAC_AT?'🚨 ':''}${r.place}</b><span style="color:${lv.color}">${r.prob}%</span></div>
       <div class="bar"><i style="width:${r.prob}%; background:${lv.color}"></i></div>
-      <div class="row-meta">${r.prob>=EVAC_AT ? 'إخلاء فوري · ' : ''}🌧️ ${r.rain} مم · 🌱 ${r.soil}% · ☁️ ${r.cloud}%</div>`;
+      <div class="row-meta">🌧️ ${r.rain} مم · 🌱 رطوبة: ${r.soil}%</div>`;
     b.onclick = ()=>{ map.setView([r.lat, r.lng], 11); r._m.openPopup(); };
     list.appendChild(b);
   });
 
-  // ضبط حدود الخريطة على كل المواقع
   if(!renderDay.fitted){
     map.fitBounds(L.latLngBounds(DATA.map(r=>[r.lat, r.lng])).pad(.25));
     renderDay.fitted = true;
@@ -478,11 +390,10 @@ function worstDayIndex(){
 function setData(csvText, label){
   DATA = parseCSV(csvText);
   DAYS = [...new Set(DATA.map(r=>r.date))].sort();
-  document.getElementById('dataSrc').textContent = label + ' — ' + DATA.length + ' سجل · ' + DAYS.length + ' أيام · ' + new Set(DATA.map(r=>r.place)).size + ' موقع';
+  document.getElementById('dataSrc').textContent = label + ' — ' + DATA.length + ' سجل فضائي من ناسا · ' + DAYS.length + ' يوم';
   const ds = document.getElementById('daySlider');
   ds.max = Math.max(0, DAYS.length-1);
   ds.value = worstDayIndex();
-  // تعبئة قائمة الرادار
   valleySelect.innerHTML = [...new Set(DATA.map(r=>r.place))].map(p=>`<option>${p}</option>`).join('');
   initMap();
   renderDay.fitted = false;
@@ -494,11 +405,12 @@ async function loadData(){
   try{
     const res = await fetch(CSV_URL, {cache:'no-store'});
     if(!res.ok) throw new Error('nf');
-    setData(await res.text(), 'المصدر: data.csv');
+    setData(await res.text(), 'المصدر: NASA POWER (DTW_prec.csv)');
   }catch(e){
-    setData(FALLBACK_CSV, 'بيانات تجريبية مضمّنة');
+    alert('تعذر تحميل ملف DTW_prec.csv، يرجى التأكد من وجوده في نفس المجلد.');
   }
 }
+
 document.getElementById('daySlider').addEventListener('input', renderDay);
 document.getElementById('worstDayBtn').addEventListener('click', ()=>{
   document.getElementById('daySlider').value = worstDayIndex(); renderDay();
@@ -508,81 +420,6 @@ document.getElementById('csvFile').addEventListener('change', e=>{
   const rd = new FileReader();
   rd.onload = ()=> setData(rd.result, 'المصدر: ' + f.name);
   rd.readAsText(f, 'UTF-8');
-});
-
-/* =========================================================
-   4) الرادار + المطر + زر الطوارئ
-   ========================================================= */
-const TYPE_LABEL = {valley:'وادٍ', governorate:'محافظة', town:'مركز', village:'قرية'};
-
-function parseHist(text){
-  const lines = text.replace(/^﻿/, '').trim().split(/\r?\n/);
-  const head = lines.shift().split(',').map(h=>h.trim());
-  const ix = n => head.indexOf(n);
-  return lines.filter(l=>l.trim()).map(l=>{
-    const c = l.split(',').map(x=>x.trim());
-    const path = (c[ix('path')] || '').split('|').map(p=>p.trim().split(/\s+/).map(Number)).filter(a=>a.length===2 && !a.some(isNaN));
-    return {
-      name:c[ix('name')], type:c[ix('type')] || 'village',
-      lat:+c[ix('lat')], lng:+c[ix('lng')],
-      year:c[ix('year')] || '', note:c[ix('note')] || '',
-      verified:(c[ix('verified')] || '').toLowerCase()==='yes', path
-    };
-  }).filter(h => h.name);
-}
-
-function histNote(place){
-  const h = HIST.find(x => x.name === place && x.type !== 'valley');
-  if(!h) return '';
-  return `<div class="hist-note">🕘 تضررت سابقاً${h.year ? ' ('+h.year+')' : ''}${h.note ? ' — '+h.note : ''}</div>`;
-}
-
-function renderHistory(){
-  if(!mapReady) return;
-  valleyLayer.clearLayers(); histLayer.clearLayers();
-  HIST.forEach(h=>{
-    const popup = `<b>${h.name}</b><br>${TYPE_LABEL[h.type] || h.type}` +
-      (h.year ? `<br>🕘 تضرر سابقاً: ${h.year}` : (h.type !== 'valley' ? '<br>🕘 تضررت سابقاً' : '')) +
-      (h.note ? `<br>${h.note}` : '') +
-      (h.verified ? '' : '<div class="unv-note">⚠️ الموقع تقريبي — يحتاج تأكيد</div>');
-
-    if(h.type === 'valley'){
-      if(h.path.length > 1){
-        L.polyline(h.path, {color:'#35BEEE', weight:4, opacity:h.verified?.95:.6, dashArray:h.verified?null:'8 6'})
-          .bindPopup(popup).bindTooltip(h.name, {sticky:true}).addTo(valleyLayer);
-        if(h.year){
-          const mid = h.path[Math.floor(h.path.length/2)];
-          L.marker(mid, {icon:L.divIcon({className:'', html:'<div class="hist-pin'+(h.verified?'':' unv')+'">🕘</div>', iconSize:[28,28], iconAnchor:[14,14]})})
-            .bindPopup(popup).bindTooltip(h.name+' — تضرر سابقاً').addTo(histLayer);
-        }
-      } else if(!isNaN(h.lat) && !isNaN(h.lng)){
-        L.circleMarker([h.lat, h.lng], {radius:7, color:'#35BEEE', fillColor:'#35BEEE', fillOpacity:.7})
-          .bindPopup(popup).bindTooltip(h.name).addTo(valleyLayer);
-      }
-    } else if(!isNaN(h.lat) && !isNaN(h.lng)){
-      L.marker([h.lat, h.lng], {icon:L.divIcon({className:'', html:'<div class="hist-pin'+(h.verified?'':' unv')+'">🕘</div>', iconSize:[28,28], iconAnchor:[14,14]})})
-        .bindPopup(popup).bindTooltip(h.name+' — تضررت سابقاً').addTo(histLayer);
-    }
-  });
-}
-
-async function loadHistory(){
-  try{
-    const res = await fetch(HIST_URL, {cache:'no-store'});
-    if(!res.ok) throw new Error('nf');
-    HIST = parseHist(await res.text());
-  }catch(e){
-    HIST = parseHist(FALLBACK_HIST);
-  }
-  renderHistory();
-  if(DATA.length) renderDay();   // لتحديث نوافذ المواقع بملاحظة "تضررت سابقاً"
-}
-
-document.getElementById('tglValleys').addEventListener('change', e=>{
-  e.target.checked ? map.addLayer(valleyLayer) : map.removeLayer(valleyLayer);
-});
-document.getElementById('tglHist').addEventListener('change', e=>{
-  e.target.checked ? map.addLayer(histLayer) : map.removeLayer(histLayer);
 });
 
 const rainContainer = document.getElementById('rainContainer');
@@ -605,10 +442,10 @@ const gaugeArc = document.getElementById('gaugeArc'), gaugeText = document.getEl
 const valleySelect = document.getElementById('valleySelect');
 const emergencyBtn = document.getElementById('emergencyBtn');
 const CIRC = 540.35;
-let timeoutId, lastPct = 0;
+let timeoutId;
 
 emergencyBtn.addEventListener('click', ()=>{
-  alert('🚨 تم إرسال الإنذار الآلي لغرفة عمليات الدفاع المدني: ' + valleySelect.value + ' — الرجاء إخلاء المنطقة.');
+  alert('🚨 تم إرسال الإنذار الآلي لغرفة عمليات الدفاع المدني في حائل — تم تفعيل خطة الإخلاء.');
 });
 
 function triggerSimulation(){
@@ -622,7 +459,7 @@ function triggerSimulation(){
   updateRain();
 
   gaugeText.textContent = '...';
-  gaugeMsg.textContent = 'جاري تحليل البيانات الفضائية...';
+  gaugeMsg.textContent = 'جاري تحليل بيانات ناسا الفضائية...';
   gaugeMsg.style.color = 'var(--water)';
   gaugeArc.style.stroke = '#1c2740';
   gaugeArc.setAttribute('stroke-dashoffset', CIRC);
@@ -630,7 +467,7 @@ function triggerSimulation(){
 
   clearTimeout(timeoutId);
   timeoutId = setTimeout(()=>{
-    const pct = floodProb(r, s, c);
+    const pct = floodProb(r, s, s, c);
     gaugeArc.setAttribute('stroke-dashoffset', CIRC - (CIRC*pct/100));
     gaugeText.textContent = pct + '%';
     const place = valleySelect.value;
@@ -650,19 +487,21 @@ function triggerSimulation(){
     gaugeMsg.style.color = 'var(--text-dim)';
   }, 600);
 }
+
 function syncRadar(){
   const rows = window.__rows || [];
   const r = (syncRadar.first ? null : rows.find(x => x.place === valleySelect.value)) || rows[0];
   syncRadar.first = false;
   if(!r) return;
   valleySelect.value = r.place;
-  rain.value = Math.min(100, r.rain); soil.value = r.soil; cloud.value = r.cloud;
+  rain.value = Math.min(100, r.rain); 
+  soil.value = Math.round((r.soil + r.root)/2); 
+  cloud.value = r.cloud;
   triggerSimulation();
 }
-valleySelect.addEventListener('change', syncRadar);
-triggerSimulation();
 
-loadData().then(loadHistory);
+valleySelect.addEventListener('change', syncRadar);
+loadData();
 </script>
 </body>
 </html>
