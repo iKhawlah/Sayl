@@ -17,12 +17,6 @@
   --danger:#E2465A; --amber:#EDA23F; --safe:#3FC98A;
   --text:#EAF1F8; --text-dim:#8C9AB4;
 }
-@media (prefers-color-scheme: light){
-  :root:not([data-theme="dark"]){
-    --bg:#F3F5F8; --bg-alt:#EAEEF3; --surface:#FFFFFF; --surface-2:#F0F3F7;
-    --line:#DCE2EA; --text:#101623; --text-dim:#5A6579;
-  }
-}
 *{box-sizing:border-box; margin:0; padding:0;}
 html{scroll-behavior:smooth;}
 body{
@@ -75,7 +69,7 @@ input[type=range]{-webkit-appearance:none; width:100%; height:4px; border-radius
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--water); cursor:pointer; box-shadow:0 0 10px rgba(53,190,238,.6);}
 
 .map-grid{display:grid; grid-template-columns:1fr 320px; gap:18px; margin-top:18px; align-items:stretch;}
-#map{direction:ltr; height:520px; border-radius:6px; border:1px solid var(--line); background:var(--surface-2); z-index:1;}
+#map{direction:ltr; height:520px; border-radius:6px; border:1px solid var(--line); background:#111; z-index:1;}
 .leaflet-container{font-family:'Cairo',sans-serif;}
 .leaflet-popup-content{direction:rtl; text-align:right; font-family:'Cairo',sans-serif; margin:12px 14px; line-height:1.7; font-size:14px; color:#101623;}
 .leaflet-popup-content .evac-msg{background:#E2465A; color:#fff; border-radius:4px; padding:6px 10px; margin:8px 0; font-weight:700;}
@@ -96,9 +90,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:18px; hei
 .layer-toggles{display:flex; gap:20px; flex-wrap:wrap; margin-top:14px; font-size:14px; color:var(--text);}
 .layer-toggles label{cursor:pointer; display:flex; align-items:center; gap:8px;}
 .hist-pin{width:28px; height:28px; border-radius:6px; background:#7A3FB5; border:2px solid #fff; display:flex; align-items:center; justify-content:center; font-size:15px; box-shadow:0 2px 6px rgba(0,0,0,.4);}
-.hist-pin.unv{opacity:.75; border-style:dashed;}
-.leaflet-popup-content .hist-note{color:#7A3FB5; font-weight:600;}
-.leaflet-popup-content .unv-note{color:#b36b00; font-size:12px; margin-top:4px;}
 .legend{display:flex; gap:18px; flex-wrap:wrap; margin-top:12px; font-size:13px; color:var(--text-dim);}
 .legend i{display:inline-block; width:11px; height:11px; border-radius:50%; margin-inline-end:6px; vertical-align:middle;}
 @media (max-width:860px){.map-grid{grid-template-columns:1fr;} #map{height:420px;} .place-list{max-height:none;}}
@@ -308,10 +299,11 @@ function fmtDate(d){
 function initMap(){
   if(mapReady) return;
   map = L.map('map', {zoomControl:true}).setView([25.5, 43.5], 6);
-  L.tileLayer(
-    'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    {maxZoom:18, attribution:'© OpenStreetMap, © CARTO'}
-  ).addTo(map);
+  // استخدام خرائط OpenStreetMap الرسمية المجانية 100% بدون أي طلب لـ API Key
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
   layer = L.layerGroup().addTo(map);
   valleyLayer = L.layerGroup().addTo(map);
   histLayer = L.layerGroup().addTo(map);
@@ -510,7 +502,6 @@ function syncRadar(){
 
 valleySelect.addEventListener('change', syncRadar);
 
-// تشغيل النظام فورا بدون الانتظار لملفات خارجية
 DATA = parseCSV(EMBEDDED_CSV);
 DAYS = [...new Set(DATA.map(r=>r.date))].sort();
 HIST = parseHist(EMBEDDED_HIST);
