@@ -15,8 +15,6 @@
   --sand:#CBA876;
   --danger:#E2465A; --amber:#EDA23F; --safe:#3FC98A;
   --text:#EAF1F8; --text-dim:#8C9AB4;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme: light){
   :root:not([data-theme="dark"]){
@@ -25,11 +23,13 @@
   }
 }
 *{box-sizing:border-box; margin:0; padding:0;}
-html{scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth;}
+html{scroll-behavior:smooth;}
 body{
   background:var(--bg); color:var(--text);
   font-family:'Cairo', sans-serif;
   line-height:1.75; overflow-x:hidden;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
 }
 .wrap{max-width:960px; margin:0 auto; padding:0 24px;}
 section{padding:90px 0;}
@@ -47,11 +47,11 @@ p{color:var(--text-dim); font-size:17px; max-width:640px;}
   border-bottom:1px solid var(--line);
   overflow:hidden;
 }
-.hero .wrap{position:relative; z-index:2; text-align:right; width: 100%;}
-.hero-title{font-family:'Aref Ruqaa', serif; font-size:clamp(120px,28vw,300px); letter-spacing:2px; font-weight:700; color: #FFFFFF;}
+.hero .wrap{position:relative; z-index:2; text-align:right; width:100%;}
+.hero-title{font-family:'Aref Ruqaa', serif; font-size:clamp(120px,28vw,300px); letter-spacing:2px; font-weight:700; color:var(--text);}
 .hero-slogan{font-size:clamp(18px,2.4vw,23px); color:var(--text); font-weight:400; margin-top:18px; max-width:560px;}
 
-/* SECTION A: memory / slider */
+/* MEMORY */
 .memory{background:var(--bg-alt); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
 .valley-panel{background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:28px; margin-top:34px;}
 .slider-row{display:flex; align-items:center; gap:16px; margin-top:22px;}
@@ -65,10 +65,35 @@ input[type=range]::-moz-range-thumb{width:18px; height:18px; border:none; border
 .photo-strip .photo{display:none; width:100%; aspect-ratio:800/320; object-fit:cover; border-radius:4px; border:1px solid var(--line); background:var(--surface-2);}
 .photo-strip .photo.active{display:block;}
 
-/* SECTION B: predictor (رادار التنبؤ) */
-.radar{background:var(--bg); position: relative; overflow: hidden; z-index: 1;}
-.sim-panel{display:grid; grid-template-columns:1fr 260px; gap:36px; margin-top:15px; align-items:center; position: relative; z-index: 2;}
-.controls{background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:28px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+/* FORECAST (جديد) */
+.forecast{background:var(--bg);}
+.alert-banner{margin-top:26px; padding:18px 22px; border-radius:6px; border:1px solid var(--line); background:var(--surface); display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+.alert-banner.high{border-color:var(--danger); background:rgba(226,70,90,.1);}
+.alert-banner.mid{border-color:var(--amber); background:rgba(237,162,63,.1);}
+.alert-banner.low{border-color:var(--safe); background:rgba(63,201,138,.08);}
+.alert-banner .ico{font-size:30px;}
+.alert-banner .txt{flex:1; min-width:220px; font-size:16px; color:var(--text);}
+.alert-banner .txt small{display:block; color:var(--text-dim); font-size:13.5px;}
+.data-tools{display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:22px;}
+.data-tools select{width:auto; min-width:180px;}
+.data-src{font-size:13px; color:var(--text-dim);}
+.days{display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:16px; margin-top:22px;}
+.day-card{background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:18px;}
+.day-card h3{font-size:16px; color:var(--text); margin-bottom:12px;}
+.row{display:block; width:100%; text-align:right; background:var(--surface-2); border:1px solid transparent; color:var(--text); font-family:inherit; border-radius:4px; padding:10px 12px; margin-bottom:8px; cursor:pointer; transition:.2s;}
+.row:hover{border-color:var(--water);}
+.row:last-child{margin-bottom:0;}
+.row-top{display:flex; justify-content:space-between; font-size:14px;}
+.row-top b{font-weight:600;}
+.bar{height:6px; border-radius:3px; background:var(--line); margin-top:8px; overflow:hidden;}
+.bar i{display:block; height:100%; border-radius:3px; transition:width .6s;}
+.row-meta{font-size:12px; color:var(--text-dim); margin-top:6px;}
+.btn-file{cursor:pointer;}
+
+/* RADAR */
+.radar{background:var(--bg-alt); position:relative; overflow:hidden; z-index:1; border-top:1px solid var(--line);}
+.sim-panel{display:grid; grid-template-columns:1fr 260px; gap:36px; margin-top:15px; align-items:center; position:relative; z-index:2;}
+.controls{background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:28px; box-shadow:0 10px 30px rgba(0,0,0,0.3);}
 .control{margin-bottom:24px;}
 .control:last-child{margin-bottom:0;}
 .control-top{display:flex; justify-content:space-between; font-size:14.5px; margin-bottom:10px;}
@@ -77,36 +102,31 @@ input[type=range]::-moz-range-thumb{width:18px; height:18px; border:none; border
 select{width:100%; background:var(--surface-2); color:var(--text); border:1px solid var(--line); border-radius:4px; padding:10px 12px; font-family:inherit; font-size:14.5px; outline:none;}
 .gauge-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
 .gauge{width:220px; height:220px;}
-.gauge-pct{font-size:38px; font-weight:700;}
-.gauge-msg{text-align:center; font-size:14.5px; color:var(--text-dim); max-width:230px; transition: color 0.3s;}
+.gauge-msg{text-align:center; font-size:14.5px; color:var(--text-dim); max-width:230px; transition:color .3s;}
 .gauge-msg b{color:var(--text);}
 @media (max-width:760px){.sim-panel{grid-template-columns:1fr;}}
 
-/* NEW: Rain Animation Background */
-#rainContainer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.3; }
-.drop { position: absolute; top: -50px; width: 2px; height: 35px; background: linear-gradient(transparent, var(--water)); animation: fall linear infinite; }
-@keyframes fall { 0% { transform: translateY(-50px); } 100% { transform: translateY(800px); opacity: 0; } }
+#rainContainer{position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; opacity:.3;}
+.drop{position:absolute; top:-50px; width:2px; height:35px; background:linear-gradient(transparent, var(--water)); animation:fall linear infinite;}
+@keyframes fall{0%{transform:translateY(-50px);} 100%{transform:translateY(800px); opacity:0;}}
 
-/* AI Modal Styles */
-.btn-outline { background: transparent; color: var(--water); border: 1px solid var(--water); padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-family: inherit; transition: 0.3s; margin-bottom: 10px;}
-.btn-outline:hover { background: var(--water); color: #000; }
-.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-.modal-content { background: var(--surface); padding: 30px; border-radius: 8px; max-width: 500px; width: 90%; border: 1px solid var(--line); }
-.modal-content h3 { color: var(--water); margin-bottom: 15px; margin-top: 0; }
-.modal-content ul { list-style: none; padding: 0; margin-bottom: 20px; color: var(--text-dim); font-size: 15px;}
-.modal-content li { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--surface-2); }
-.modal-content li b { color: var(--text); }
-.btn-close { background: var(--water); color: #000; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; font-family: inherit; width: 100%; }
+.btn-outline{background:transparent; color:var(--water); border:1px solid var(--water); padding:8px 16px; border-radius:4px; cursor:pointer; font-size:13px; font-family:inherit; transition:.3s;}
+.btn-outline:hover{background:var(--water); color:#000;}
+.modal-overlay{display:none; position:fixed; inset:0; background:rgba(0,0,0,.8); z-index:1000; align-items:center; justify-content:center; backdrop-filter:blur(4px);}
+.modal-content{background:var(--surface); padding:30px; border-radius:8px; max-width:500px; width:90%; border:1px solid var(--line);}
+.modal-content h3{color:var(--water); margin-bottom:15px;}
+.modal-content ul{list-style:none; padding:0; margin-bottom:20px; color:var(--text-dim); font-size:15px;}
+.modal-content li{margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid var(--surface-2);}
+.modal-content li b{color:var(--text);}
+.btn-close{background:var(--water); color:#000; border:none; padding:10px 20px; border-radius:4px; cursor:pointer; font-weight:bold; font-family:inherit; width:100%;}
 
-/* Emergency Button Styles */
-.emergency-btn { display: none; background: var(--danger); color: white; border: none; padding: 12px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; animation: pulse 1.5s infinite; font-family: inherit; width: 100%; font-size: 14px; text-align: center; }
-@keyframes pulse { 
-  0% { box-shadow: 0 0 0 0 rgba(226, 70, 90, 0.7); } 
-  70% { box-shadow: 0 0 0 10px rgba(226, 70, 90, 0); } 
-  100% { box-shadow: 0 0 0 0 rgba(226, 70, 90, 0); } 
+.emergency-btn{display:none; background:var(--danger); color:#fff; border:none; padding:12px 20px; border-radius:6px; font-weight:bold; cursor:pointer; margin-top:15px; animation:pulse 1.5s infinite; font-family:inherit; width:100%; font-size:14px; text-align:center;}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(226,70,90,.7);}
+  70%{box-shadow:0 0 0 10px rgba(226,70,90,0);}
+  100%{box-shadow:0 0 0 0 rgba(226,70,90,0);}
 }
-
-footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5px; border-top:1px solid var(--line); position: relative; z-index: 2;}
+footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5px; border-top:1px solid var(--line); position:relative; z-index:2;}
 </style>
 </head>
 <body>
@@ -122,13 +142,11 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
   <div class="wrap">
     <div class="eyebrow">ذاكرة الأودية</div>
     <div class="valley-panel">
-      
       <div class="photo-strip">
         <img class="photo active" data-phase="0" src="./before_flood.png" alt="غيوم فوق الوادي">
         <img class="photo" data-phase="1" src="./during_flood.png" alt="جريان السيل">
         <img class="photo" data-phase="2" src="./after_flood.png" alt="انحسار السيل">
       </div>
-
       <div class="slider-row">
         <span style="color:var(--text-dim); font-size:13px;">قبل</span>
         <input type="range" id="timeSlider" min="0" max="100" value="0">
@@ -139,21 +157,43 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
         <span id="lbl1">أثناء السيل</span>
         <span id="lbl2">بعد انحسار المياه</span>
       </div>
-      <div class="timestamp" id="timestamp">تتجمع الغيوم الكثيفة فوق المنطقة، مؤشر قوي لبداية حالة مطرية.</div>
+      <div class="timestamp" id="timestamp"></div>
     </div>
   </div>
 </section>
 
-<section class="radar" id="radar">
-  <!-- تأثير المطر الديناميكي في الخلفية -->
-  <div id="rainContainer"></div>
-
+<!-- ===== جديد: التنبؤ بالأيام القادمة من الداتا ===== -->
+<section class="forecast" id="forecast">
   <div class="wrap">
-    <div style="display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2;">
-      <div class="eyebrow">رادار التنبؤ المعزز بالذكاء الاصطناعي</div>
+    <div class="eyebrow">التنبؤ بالأيام القادمة</div>
+    <h2>أين ومتى يحتمل جريان السيل؟</h2>
+    <p>يقرأ النظام بيانات الأمطار وتشبع التربة والغيوم لكل وادي، ويحسب احتمالية السيل لكل يوم.</p>
+
+    <div class="alert-banner" id="topAlert">
+      <div class="ico">⏳</div>
+      <div class="txt">جاري تحميل البيانات...</div>
+    </div>
+
+    <div class="data-tools">
+      <select id="filterValley"><option value="all">كل الأودية</option></select>
+      <label class="btn-outline btn-file">📂 رفع ملف بيانات (CSV)
+        <input type="file" id="csvFile" accept=".csv" hidden>
+      </label>
+      <span class="data-src" id="dataSrc"></span>
+    </div>
+
+    <div class="days" id="daysGrid"></div>
+  </div>
+</section>
+
+<section class="radar" id="radar">
+  <div id="rainContainer"></div>
+  <div class="wrap">
+    <div style="display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+      <div class="eyebrow" style="margin:0">رادار التنبؤ المعزز بالذكاء الاصطناعي</div>
       <button class="btn-outline" onclick="document.getElementById('modelModal').style.display='flex'">تفاصيل الذكاء الاصطناعي 🧠</button>
     </div>
-    
+
     <div class="sim-panel">
       <div class="controls">
         <div class="control">
@@ -183,18 +223,16 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
           <circle cx="100" cy="100" r="86" fill="none" stroke="#1c2740" stroke-width="14"/>
           <circle id="gaugeArc" cx="100" cy="100" r="86" fill="none" stroke="var(--safe)" stroke-width="14"
                   stroke-linecap="round" transform="rotate(-90 100 100)"
-                  stroke-dasharray="540.35" stroke-dashoffset="540.35" style="transition: stroke-dashoffset 0.8s ease-out;"/>
+                  stroke-dasharray="540.35" stroke-dashoffset="540.35" style="transition:stroke-dashoffset .8s ease-out;"/>
           <text x="100" y="112" text-anchor="middle" fill="var(--text)" font-size="34" font-weight="700" id="gaugeText" font-family="Cairo, sans-serif">0%</text>
         </svg>
         <div class="gauge-msg" id="gaugeMsg">أدخل القيم لحساب احتمالية جريان السيل</div>
-        
         <button id="emergencyBtn" class="emergency-btn" onclick="alert('🚨 تم إرسال الإنذار الآلي لغرفة عمليات الدفاع المدني بنجاح!')">إطلاق الإنذار وإبلاغ الدفاع المدني</button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- نافذة تفاصيل النموذج -->
 <div id="modelModal" class="modal-overlay">
   <div class="modal-content">
     <h3>بطاقة نموذج الذكاء الاصطناعي (Model Card)</h3>
@@ -211,21 +249,35 @@ footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13.5p
 <footer>مشروع سَيْل — الإنذار المبكر للسيول، من الفضاء إلى الأودية</footer>
 
 <script>
-// قسم ذاكرة الوادي
+/* =========================================================
+   1) النموذج — دالة واحدة يستخدمها الرادار والتنبؤ معاً
+   لما يجهز نموذجكم الحقيقي غيّروا المعاملات هنا فقط
+   ========================================================= */
+const MODEL = { b0:-6, rain:0.065, soil:0.045, cloud:0.02 };
+function floodProb(r, s, c){
+  const z = MODEL.b0 + r*MODEL.rain + s*MODEL.soil + c*MODEL.cloud;
+  return Math.round(100 / (1 + Math.exp(-z)));
+}
+function level(p){
+  return p >= 70 ? {k:'high', color:'var(--danger)', label:'خطر مرتفع'}
+       : p >= 40 ? {k:'mid',  color:'var(--amber)',  label:'مراقبة'}
+                 : {k:'low',  color:'var(--safe)',   label:'آمن'};
+}
+
+/* =========================================================
+   2) قسم ذاكرة الوادي
+   ========================================================= */
 const timeSlider = document.getElementById('timeSlider');
-const timestamp = document.getElementById('timestamp');
+const timestamp  = document.getElementById('timestamp');
 const lbls = [document.getElementById('lbl0'), document.getElementById('lbl1'), document.getElementById('lbl2')];
-
 const phaseData = [
-  {text: 'المرحلة 1: تشكّل السحب الكثيفة فوق المنطقة وبداية هطول الأمطار.'},
-  {text: 'المرحلة 2: جريان السيول باندفاع في المجرى الرئيسي، وتغطية المياه للمناطق المنخفضة.'},
-  {text: 'المرحلة 3: انحسار المياه وظهور التربة مشبعة بالرطوبة العالية (باللون الأحمر).'}
+  'المرحلة 1: تشكّل السحب الكثيفة فوق المنطقة وبداية هطول الأمطار.',
+  'المرحلة 2: جريان السيول باندفاع في المجرى الرئيسي، وتغطية المياه للمناطق المنخفضة.',
+  'المرحلة 3: انحسار المياه وظهور التربة مشبعة بالرطوبة العالية (باللون الأحمر).'
 ];
-
-function phaseIndex(v){ return v < 34 ? 0 : v < 67 ? 1 : 2; }
 function renderTime(v){
-  const idx = phaseIndex(v);
-  timestamp.textContent = phaseData[idx].text;
+  const idx = v < 34 ? 0 : v < 67 ? 1 : 2;
+  timestamp.textContent = phaseData[idx];
   lbls.forEach((l,i)=> l.classList.toggle('phase-active', i===idx));
   document.querySelectorAll('.photo-strip .photo').forEach(img=>{
     img.classList.toggle('active', +img.dataset.phase === idx);
@@ -234,24 +286,157 @@ function renderTime(v){
 timeSlider.addEventListener('input', e=> renderTime(+e.target.value));
 renderTime(0);
 
-// قسم المطر الديناميكي
+/* =========================================================
+   3) التنبؤ من الداتا (CSV)
+   الأعمدة: date,valley,rain_mm,soil_pct,cloud_pct
+   ========================================================= */
+const CSV_URL = './data.csv';
+// نسخة احتياطية مضمّنة: تشتغل حتى لو فتحتوا الصفحة مباشرة بدون سيرفر
+const FALLBACK_CSV = `date,valley,rain_mm,soil_pct,cloud_pct
+2026-10-07,شعيب الأديرع,5,20,30
+2026-10-07,وادي عقدة,8,25,35
+2026-10-07,وادي مشار,3,18,25
+2026-10-08,شعيب الأديرع,12,28,45
+2026-10-08,وادي عقدة,20,30,55
+2026-10-08,وادي مشار,10,22,40
+2026-10-09,شعيب الأديرع,35,45,70
+2026-10-09,وادي عقدة,48,50,80
+2026-10-09,وادي مشار,25,40,65
+2026-10-10,شعيب الأديرع,70,65,90
+2026-10-10,وادي عقدة,82,70,95
+2026-10-10,وادي مشار,55,60,85
+2026-10-11,شعيب الأديرع,45,75,80
+2026-10-11,وادي عقدة,60,78,85
+2026-10-11,وادي مشار,38,70,75
+2026-10-12,شعيب الأديرع,15,60,50
+2026-10-12,وادي عقدة,22,62,55
+2026-10-12,وادي مشار,12,55,45
+2026-10-13,شعيب الأديرع,4,40,25
+2026-10-13,وادي عقدة,6,42,30
+2026-10-13,وادي مشار,2,38,20`;
+
+let DATA = [];
+
+function parseCSV(text){
+  const lines = text.replace(/^\uFEFF/, '').trim().split(/\r?\n/);
+  const head = lines.shift().split(',').map(h=>h.trim());
+  const idx = n => head.indexOf(n);
+  return lines.filter(l=>l.trim()).map(l=>{
+    const c = l.split(',').map(x=>x.trim());
+    return {
+      date:  c[idx('date')],
+      valley:c[idx('valley')],
+      rain:  +c[idx('rain_mm')],
+      soil:  +c[idx('soil_pct')],
+      cloud: +c[idx('cloud_pct')]
+    };
+  }).filter(r => r.date && r.valley && !isNaN(r.rain) && !isNaN(r.soil) && !isNaN(r.cloud))
+    .map(r => ({...r, prob: floodProb(r.rain, r.soil, r.cloud)}));
+}
+
+function fmtDate(d){
+  return new Date(d + 'T12:00:00').toLocaleDateString('ar-SA-u-ca-gregory', {weekday:'long', day:'numeric', month:'long'});
+}
+
+function renderForecast(){
+  const filter = document.getElementById('filterValley').value;
+  const rows = DATA.filter(r => filter === 'all' || r.valley === filter);
+
+  // الإنذار الأعلى
+  const banner = document.getElementById('topAlert');
+  if(!rows.length){
+    banner.className = 'alert-banner';
+    banner.innerHTML = '<div class="ico">ℹ️</div><div class="txt">لا توجد بيانات.</div>';
+    document.getElementById('daysGrid').innerHTML = '';
+    return;
+  }
+  const top = rows.reduce((a,b)=> b.prob > a.prob ? b : a);
+  const lv = level(top.prob);
+  banner.className = 'alert-banner ' + lv.k;
+  if(top.prob >= 40){
+    banner.innerHTML = `<div class="ico">${top.prob>=70?'🚨':'⚠️'}</div>
+      <div class="txt"><b>${top.prob>=70?'احتمال سيل جارف':'احتمال سيل متوسط'} يوم ${fmtDate(top.date)}</b> في ${top.valley} بنسبة ${top.prob}%
+      <small>الهطول ${top.rain} مم • تشبع التربة ${top.soil}% • الغيوم ${top.cloud}%</small></div>`;
+  } else {
+    banner.innerHTML = `<div class="ico">✅</div>
+      <div class="txt"><b>لا مخاطر سيول متوقعة</b> خلال الفترة المتاحة. أعلى احتمال ${top.prob}% في ${top.valley}.</div>`;
+  }
+
+  // بطاقات الأيام
+  const byDay = {};
+  rows.forEach(r => (byDay[r.date] = byDay[r.date] || []).push(r));
+  const grid = document.getElementById('daysGrid');
+  grid.innerHTML = '';
+  Object.keys(byDay).sort().forEach(d=>{
+    const card = document.createElement('div');
+    card.className = 'day-card';
+    card.innerHTML = `<h3>${fmtDate(d)}</h3>`;
+    byDay[d].sort((a,b)=>b.prob-a.prob).forEach(r=>{
+      const l = level(r.prob);
+      const btn = document.createElement('button');
+      btn.className = 'row';
+      btn.innerHTML = `<div class="row-top"><b>${r.valley}</b><span style="color:${l.color}">${r.prob}% · ${l.label}</span></div>
+        <div class="bar"><i style="width:${r.prob}%; background:${l.color}"></i></div>
+        <div class="row-meta">🌧️ ${r.rain} مم · 🌱 ${r.soil}% · ☁️ ${r.cloud}%</div>`;
+      // الضغط على الصف يحمّل قيمه في الرادار
+      btn.onclick = ()=>{
+        valleySelect.value = r.valley;
+        rain.value = Math.min(100, r.rain);
+        soil.value = r.soil;
+        cloud.value = r.cloud;
+        triggerSimulation();
+        document.getElementById('radar').scrollIntoView({behavior:'smooth'});
+      };
+      card.appendChild(btn);
+    });
+    grid.appendChild(card);
+  });
+}
+
+function setData(csvText, srcLabel){
+  DATA = parseCSV(csvText);
+  document.getElementById('dataSrc').textContent = srcLabel + ' — ' + DATA.length + ' سجل';
+  // تعبئة قائمة الأودية من الداتا
+  const sel = document.getElementById('filterValley');
+  const valleys = [...new Set(DATA.map(r=>r.valley))];
+  sel.innerHTML = '<option value="all">كل الأودية</option>' + valleys.map(v=>`<option>${v}</option>`).join('');
+  renderForecast();
+}
+
+async function loadData(){
+  try{
+    const res = await fetch(CSV_URL, {cache:'no-store'});
+    if(!res.ok) throw new Error('not found');
+    setData(await res.text(), 'المصدر: data.csv');
+  }catch(e){
+    setData(FALLBACK_CSV, 'بيانات تجريبية مضمّنة');
+  }
+}
+document.getElementById('filterValley').addEventListener('change', renderForecast);
+document.getElementById('csvFile').addEventListener('change', e=>{
+  const f = e.target.files[0]; if(!f) return;
+  const reader = new FileReader();
+  reader.onload = ()=> setData(reader.result, 'المصدر: ' + f.name);
+  reader.readAsText(f, 'UTF-8');
+});
+
+/* =========================================================
+   4) الرادار (المحاكاة اليدوية) + المطر + زر الطوارئ
+   ========================================================= */
 const rainContainer = document.getElementById('rainContainer');
-function updateRain() {
-  const rainAmount = +document.getElementById('rain').value;
-  rainContainer.innerHTML = ''; 
-  // زيادة عدد القطرات كلما زاد مؤشر المطر (بحد أقصى 100 قطرة)
-  let dropCount = Math.floor(rainAmount); 
-  for(let i = 0; i < dropCount; i++) {
-    let drop = document.createElement('div');
-    drop.className = 'drop';
-    drop.style.left = (Math.random() * 100) + '%';
-    drop.style.animationDuration = (Math.random() * 0.5 + 0.4) + 's';
-    drop.style.animationDelay = (Math.random() * 2) + 's';
-    rainContainer.appendChild(drop);
+function updateRain(){
+  const n = Math.floor(+document.getElementById('rain').value);
+  rainContainer.innerHTML = '';
+  for(let i=0;i<n;i++){
+    const d = document.createElement('div');
+    d.className = 'drop';
+    d.style.left = (Math.random()*100) + '%';
+    d.style.animationDuration = (Math.random()*0.5+0.4) + 's';
+    d.style.animationDelay = (Math.random()*2) + 's';
+    rainContainer.appendChild(d);
   }
 }
 
-// قسم التنبؤ مع تأثير المحاكاة وزر الطوارئ
 const rain = document.getElementById('rain'), soil = document.getElementById('soil'), cloud = document.getElementById('cloud');
 const rainVal = document.getElementById('rainVal'), soilVal = document.getElementById('soilVal'), cloudVal = document.getElementById('cloudVal');
 const gaugeArc = document.getElementById('gaugeArc'), gaugeText = document.getElementById('gaugeText'), gaugeMsg = document.getElementById('gaugeMsg');
@@ -265,50 +450,42 @@ function triggerSimulation(){
   rainVal.textContent = r + ' مم';
   soilVal.textContent = s + '%';
   cloudVal.textContent = c + '%';
-  
-  updateRain(); // تحديث كثافة المطر في الخلفية
-  
-  // تأثير التحميل
-  gaugeText.textContent = "...";
-  gaugeMsg.innerHTML = "جاري تحليل البيانات الفضائية...";
-  gaugeMsg.style.color = "var(--water)";
-  gaugeArc.style.stroke = "#1c2740";
+  updateRain();
+
+  gaugeText.textContent = '...';
+  gaugeMsg.textContent = 'جاري تحليل البيانات الفضائية...';
+  gaugeMsg.style.color = 'var(--water)';
+  gaugeArc.style.stroke = '#1c2740';
   gaugeArc.setAttribute('stroke-dashoffset', CIRC);
-  emergencyBtn.style.display = "none";
-  
+  emergencyBtn.style.display = 'none';
+
   clearTimeout(timeoutId);
-  timeoutId = setTimeout(() => {
-    // خوارزمية مبسطة
-    const z = -6 + r*0.065 + s*0.045 + c*0.02;
-    const prob = 1/(1+Math.exp(-z));
-    const pct = Math.round(prob*100);
-    
+  timeoutId = setTimeout(()=>{
+    const pct = floodProb(r, s, c);
     gaugeArc.setAttribute('stroke-dashoffset', CIRC - (CIRC*pct/100));
     gaugeText.textContent = pct + '%';
-    
+
     const valley = valleySelect.value;
-    let color, msg;
-    if(pct >= 70){ 
-        color='var(--danger)'; 
-        msg = `<b>خطر سيل جارف بنسبة ${pct}%</b> في ${valley} — يجب إطلاق الإنذار.`; 
-        emergencyBtn.style.display = "block";
-    } else if(pct >= 40){ 
-        color='var(--amber)'; 
-        msg = `احتمالية متوسطة (${pct}%) لجريان سيل في ${valley} — تتطلب مراقبة.`; 
-    } else { 
-        color='var(--safe)'; 
-        msg = `الوضع آمن (${pct}%) في ${valley} — لا توجد مخاطر سيول حالياً.`; 
+    const lv = level(pct);
+    let msg;
+    if(pct >= 70){
+      msg = `<b>خطر سيل جارف بنسبة ${pct}%</b> في ${valley} — يجب إطلاق الإنذار.`;
+      emergencyBtn.style.display = 'block';
+    } else if(pct >= 40){
+      msg = `احتمالية متوسطة (${pct}%) لجريان سيل في ${valley} — تتطلب مراقبة.`;
+    } else {
+      msg = `الوضع آمن (${pct}%) في ${valley} — لا توجد مخاطر سيول حالياً.`;
     }
-    
-    gaugeArc.style.stroke = color;
-    gaugeText.style.fill = color;
+    gaugeArc.style.stroke = lv.color;
+    gaugeText.style.fill = lv.color;
     gaugeMsg.innerHTML = msg;
-    gaugeMsg.style.color = "var(--text-dim)";
+    gaugeMsg.style.color = 'var(--text-dim)';
   }, 600);
 }
-
 [rain, soil, cloud, valleySelect].forEach(el => el.addEventListener('input', triggerSimulation));
 triggerSimulation();
+
+loadData();
 </script>
 </body>
 </html>
